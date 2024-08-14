@@ -1,4 +1,4 @@
-package ru.ivan.eremin.testchat.ui.theme
+package ru.ivan.eremin.testchat.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
