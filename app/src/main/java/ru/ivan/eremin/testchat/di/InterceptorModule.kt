@@ -7,8 +7,8 @@ import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoSet
 import dagger.multibindings.Multibinds
 import okhttp3.Interceptor
-import ru.ivan.eremin.testchat.di.qualifierqualifier.interceptor.AppInterceptor
-import ru.ivan.eremin.testchat.di.qualifierqualifier.interceptor.NetworkInterceptor
+import ru.ivan.eremin.testchat.di.qualifier.interceptor.AppInterceptor
+import ru.ivan.eremin.testchat.di.qualifier.interceptor.NetworkInterceptor
 import ru.ivan.eremin.testchat.network.interceptor.DeviceInfoInterceptor
 import ru.ivan.eremin.testchat.network.interceptor.RetryInterceptor
 import ru.ivan.eremin.testchat.network.interceptor.TimeoutInterceptor

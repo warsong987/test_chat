@@ -1,4 +1,4 @@
-package ru.ivan.eremin.testchat.di.qualifierqualifier.interceptor
+package ru.ivan.eremin.testchat.di.qualifier.interceptor
 
 import javax.inject.Qualifier
 

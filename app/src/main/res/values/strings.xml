@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">TestChat</string>
+    <string name="connection_failed">Потеряно соединение с интернетом</string>
+    <string name="unknown_error">Возникла ошибка! Повторите позже</string>
+    <string name="retry">Повторить</string>
+    <string name="chats">Чаты</string>
+    <string name="profile">Профиль</string>
 </resources>

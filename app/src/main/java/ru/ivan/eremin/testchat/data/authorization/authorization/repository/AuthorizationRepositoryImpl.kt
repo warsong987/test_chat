@@ -8,12 +8,16 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import ru.ivan.eremin.testchat.data.authorization.authorization.entity.RegisterInRequest
 import ru.ivan.eremin.testchat.data.authorization.authorization.service.AuthorizationService
+import ru.ivan.eremin.testchat.database.dao.AuthDao
 import ru.ivan.eremin.testchat.domain.authorization.repository.AuthorizationRepository
+import ru.ivan.eremin.testchat.service.phone.PhoneInfo
 import javax.inject.Inject
 
 
 class AuthorizationRepositoryImpl @Inject constructor(
-    private val service: AuthorizationService
+    private val service: AuthorizationService,
+    private val authDao: AuthDao,
+    private val phoneInfo: PhoneInfo
 ) : AuthorizationRepository {
     override suspend fun registration(phone: String, name: String, username: String) {
         withContext(Dispatchers.IO) {
@@ -26,6 +30,12 @@ class AuthorizationRepositoryImpl @Inject constructor(
                     )
                 ).toRequestBody("application/json".toMediaTypeOrNull())
             )
+        }
+    }
+
+    override suspend fun getCurrentPhoneNumber(): String {
+        return withContext(Dispatchers.IO){
+            phoneInfo.getPhoneNumber()
         }
     }
 }

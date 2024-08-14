@@ -6,4 +6,6 @@ interface AuthorizationRepository {
         name: String,
         username: String
     )
+
+    suspend fun getCurrentPhoneNumber(): String
 }

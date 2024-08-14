@@ -33,6 +33,9 @@ android {
             )
         }
     }
+    configurations.implementation{
+        exclude(group = "com.intellij", module = "annotations")
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -69,10 +72,15 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    implementation (libs.retrofit)
-    implementation(libs.hilt.android)
+    implementation(libs.retrofit)
+    implementation(libs.bundles.hilt)
     ksp(libs.hilt.compiler)
     implementation(libs.okhttp)
     implementation(libs.retrofit2.kotlinx.serialization.converter)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.bundles.room)
+    ksp(libs.room.compiler)
+    implementation(libs.lifecycle.viewmodel.compose)
+    implementation(libs.navigate.compose)
+    implementation (libs.accompanist.permissions)
 }

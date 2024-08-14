@@ -15,8 +15,8 @@ import okhttp3.OkHttpClient
 import retrofit2.Converter
 import retrofit2.Retrofit
 import ru.ivan.eremin.testchat.app.config.AppApi
-import ru.ivan.eremin.testchat.di.qualifierqualifier.interceptor.AppInterceptor
-import ru.ivan.eremin.testchat.di.qualifierqualifier.interceptor.NetworkInterceptor
+import ru.ivan.eremin.testchat.di.qualifier.interceptor.AppInterceptor
+import ru.ivan.eremin.testchat.di.qualifier.interceptor.NetworkInterceptor
 import ru.ivan.eremin.testchat.network.error.ApiExceptionAdapter
 import ru.ivan.eremin.testchat.network.interceptor.ServiceAuthenticator
 import java.util.concurrent.TimeUnit
