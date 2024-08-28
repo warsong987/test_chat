@@ -8,10 +8,7 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.LocalContext
-import ru.ivan.eremin.testchat.presentation.handler.CustomLogOutHandler
-import ru.ivan.eremin.testchat.presentation.handler.LocalLogOutHandler
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
@@ -51,14 +48,14 @@ fun TestChatTheme(
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
-
+/*
     CompositionLocalProvider(
         LocalLogOutHandler provides CustomLogOutHandler(LocalContext.current)
-    ) {
+    ) {*/
         MaterialTheme(
             colorScheme = colorScheme,
             typography = Typography,
             content = content
         )
-    }
+
 }

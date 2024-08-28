@@ -23,13 +23,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.rememberPermissionState
 import ru.ivan.eremin.testchat.presentation.components.Screen
-import ru.ivan.eremin.testchat.presentation.navigate.Chats
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
@@ -55,18 +53,13 @@ fun RegistrationScreen(
         } else {
             resuestPermissionState.launchPermissionRequest()
         }
-
     }
 
     RegistrationScreenState(
         state = state,
         onAction = remember {
             {
-                actionHandler(
-                    action = it,
-                    navHostController = navHostController,
-                    viewModel = viewModel
-                )
+
             }
         }
     )
@@ -97,26 +90,6 @@ private fun RegistrationScreenState(
                 Text(text = "Зарегистрироваться")
             }
         }
-    }
-}
-
-private fun actionHandler(
-    action: Action,
-    navHostController: NavHostController,
-    viewModel: RegistrationViewModel
-) {
-    when (action) {
-        is Action.Registration -> navHostController.navigate(
-            Chats.route
-        ) {
-            popUpTo(navHostController.graph.findStartDestination().id) {
-                saveState = true
-                inclusive = true
-            }
-            launchSingleTop = true
-            restoreState = true
-        }
-
     }
 }
 

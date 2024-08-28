@@ -7,5 +7,7 @@ interface AuthorizationRepository {
         username: String
     )
 
-    suspend fun getCurrentPhoneNumber(): String
+    suspend fun sendPhoneForGetCode(phone: String): Boolean
+
+    suspend fun checkAuthCode(phone: String, code: String): Boolean
 }

@@ -28,7 +28,6 @@ import androidx.compose.ui.unit.dp
 import ru.ivan.eremin.testchat.R
 import ru.ivan.eremin.testchat.presentation.core.UiError
 import ru.ivan.eremin.testchat.presentation.core.getErrorMessage
-import ru.ivan.eremin.testchat.presentation.handler.LocalLogOutHandler
 import ru.ivan.eremin.testchat.presentation.handler.LocalRefreshHandler
 import ru.ivan.eremin.testchat.presentation.handler.ProvideRefreshHandler
 
@@ -127,10 +126,8 @@ private fun ScreenContent(
         }
         val error = uiError.getErrorMessage()
         val snackbarAction = stringResource(id = R.string.retry)
-        val logOutHandler = LocalLogOutHandler.current
         val refreshHandler = LocalRefreshHandler.current
         LaunchedEffect(error, uiError) {
-            if (uiError is UiError.LogOut) logOutHandler.restartApp()
             if (error != null) {
                 snackbarHostState.showSnackbar(
                     error,
