@@ -33,7 +33,7 @@ android {
             )
         }
     }
-    configurations.implementation{
+    configurations.implementation {
         exclude(group = "com.intellij", module = "annotations")
     }
     compileOptions {
@@ -82,5 +82,6 @@ dependencies {
     ksp(libs.room.compiler)
     implementation(libs.lifecycle.viewmodel.compose)
     implementation(libs.navigate.compose)
-    implementation (libs.accompanist.permissions)
+    implementation(libs.accompanist.permissions)
+    implementation(libs.googlecode.libphonenumber)
 }

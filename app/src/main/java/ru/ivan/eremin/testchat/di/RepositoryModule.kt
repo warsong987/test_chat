@@ -4,7 +4,6 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import ru.ivan.eremin.testchat.data.authorization.authorization.repository.AuthorizationRepositoryImpl
 import ru.ivan.eremin.testchat.domain.authorization.repository.AuthorizationRepository
 
 @InstallIn(SingletonComponent::class)
