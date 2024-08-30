@@ -35,7 +35,6 @@ fun BottomNavigate(navController: NavHostController) {
                         }
                         launchSingleTop = true
                         restoreState = true
-
                     }
                 },
                 icon = {

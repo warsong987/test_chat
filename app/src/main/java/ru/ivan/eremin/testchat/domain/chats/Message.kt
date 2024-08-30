@@ -9,3 +9,12 @@ data class Message(
     val userMessage: String,
     val otherMessages: String
 )
+
+@Immutable
+@Serializable
+data class ChatDetails(
+    val icon: String,
+    val name: String,
+    val status: String,
+    val messages: List<Message>
+)

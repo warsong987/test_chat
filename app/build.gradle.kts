@@ -9,12 +9,12 @@ plugins {
 
 android {
     namespace = "ru.ivan.eremin.testchat"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "ru.ivan.eremin.testchat"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -85,4 +85,5 @@ dependencies {
     implementation(libs.accompanist.permissions)
     implementation(libs.googlecode.libphonenumber)
     implementation(libs.coil)
+    implementation(libs.kotlinx.collections.immutable)
 }

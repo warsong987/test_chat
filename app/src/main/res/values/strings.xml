@@ -488,4 +488,8 @@
     <string name="iraq_hint" translatable="false">0777 123 4567</string>
     <string name="slovenia_hint" translatable="false">070 123 456</string>
     <string name="unkown">Unkown</string>
+    <string name="chat_input_placeholder">Сообщение</string>
+    <string name="chat_status_connecting">Соединение…</string>
+    <string name="chat_status_online">Онлайн</string>
+    <string name="chat_status_typing">Печатает…</string>
 </resources>

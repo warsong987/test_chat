@@ -2,6 +2,8 @@ package ru.ivan.eremin.testchat.presentation.screen.chat
 
 import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
+import ru.ivan.eremin.testchat.domain.chats.ChatDetails
+import ru.ivan.eremin.testchat.domain.chats.ChatSelectedFile
 import ru.ivan.eremin.testchat.domain.chats.Message
 import ru.ivan.eremin.testchat.presentation.core.BaseViewModel
 import ru.ivan.eremin.testchat.presentation.navigate.ChatRoute
@@ -21,13 +23,30 @@ class ChatViewModel @Inject constructor(
     init {
         updateState {
             copy(
-                message = List(5) {
-                    Message(
-                        userMessage = "$it UserMessage",
-                        otherMessages = "$it OtherMessages"
-                    )
-                }
+                message = ChatDetails(
+                    icon = "",
+                    name = "Chat",
+                    messages = List(5) {
+                        Message(
+                            userMessage = "$it UserMessage",
+                            otherMessages = "$it OtherMessages"
+                        )
+                    },
+                    status = "Онлайн"
+                )
             )
         }
+    }
+
+    fun deleteFileFromSelected(chatFile: ChatSelectedFile){
+
+    }
+
+    fun changeMessage(message: String) {
+
+    }
+
+    fun sendMessage() {
+
     }
 }

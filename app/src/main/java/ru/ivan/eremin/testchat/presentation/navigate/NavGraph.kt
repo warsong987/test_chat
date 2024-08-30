@@ -38,7 +38,7 @@ fun Navigate(
             )
         }
         composable(
-            ChatRoute.route,
+            "${ChatRoute.route}/{${ChatRoute.ID}}",
             arguments = listOf(
                 navArgument(ChatRoute.ID) {
                     type = NavType.IntType
