@@ -5,45 +5,21 @@ import androidx.annotation.StringRes
 import ru.ivan.eremin.testchat.R
 
 sealed class Routes(
-    protected val route: String,
+    val route: String,
     @StringRes val resourceId: Int? = null,
-    @DrawableRes val iconResourceId: Int? = null,
-    vararg params: String
-) {
-    val fullRouter: String = if (params.isEmpty()) route else {
-        val builder = StringBuilder(route)
-        params.forEach { builder.append("/{${it}}") }
-        builder.toString()
-    }
+    @DrawableRes val iconResourceId: Int? = null
+)
+
+data object AuthorizationRoute : Routes("authorization")
+data object RegistrationRoute : Routes("registration")
+data object ChatsRoute : Routes("chats", R.string.chats, R.drawable.ic_chat)
+data object ProfileRoute : Routes("profiles", R.string.profile, R.drawable.ic_profile)
+data object ChatRoute : Routes("chat") {
+    const val ID = "id"
 }
-
-data object Authorization : Routes("authorization")
-
-data object Registration : Routes("registration") {
-    private const val PHONE = "phone"
-
-    operator fun invoke(phone: String) = route.appendParams(
-        PHONE to phone
-    )
-}
-
-internal fun String.appendParams(vararg params: Pair<String, Any?>): String {
-    val builder = StringBuilder(this)
-
-    params.forEach {
-        it.second?.toString()?.let {
-            builder.append("/$it")
-        }
-    }
-
-    return builder.toString()
-}
-
-data object Chats : Routes("chats", R.string.chats, R.drawable.ic_chat)
-data object Profile : Routes("profiles", R.string.profile, R.drawable.ic_profile)
 
 
 val itemsBottomBar = listOf(
-    Chats,
-    Profile
+    ChatsRoute,
+    ProfileRoute
 )

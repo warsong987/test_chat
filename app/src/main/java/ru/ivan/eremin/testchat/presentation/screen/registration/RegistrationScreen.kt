@@ -23,11 +23,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.rememberPermissionState
 import ru.ivan.eremin.testchat.presentation.components.Screen
+import ru.ivan.eremin.testchat.presentation.navigate.ChatsRoute
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
@@ -59,7 +61,7 @@ fun RegistrationScreen(
         state = state,
         onAction = remember {
             {
-
+                handleAction(it, navHostController)
             }
         }
     )
@@ -81,7 +83,11 @@ private fun RegistrationScreenState(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = state.phone.orEmpty())
+            TextField(
+                value = state.phone.orEmpty(),
+                onValueChange = {},
+                readOnly = true,
+            )
             TextField(value = "Иван", onValueChange = {})
             TextField(value = "warsontt00", onValueChange = {})
             Button(onClick = {
@@ -95,6 +101,22 @@ private fun RegistrationScreenState(
 
 internal sealed interface Action {
     data object Registration : Action
+}
+
+private fun handleAction(action: Action, navHostController: NavHostController) {
+    when (action) {
+        is Action.Registration -> {
+            navHostController.navigate(
+                ChatsRoute.route
+            ) {
+                launchSingleTop = true
+                restoreState = true
+                popUpTo(navHostController.graph.findStartDestination().id) {
+                    saveState = true
+                }
+            }
+        }
+    }
 }
 
 @Composable

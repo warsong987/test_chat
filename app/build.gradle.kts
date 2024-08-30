@@ -84,4 +84,5 @@ dependencies {
     implementation(libs.navigate.compose)
     implementation(libs.accompanist.permissions)
     implementation(libs.googlecode.libphonenumber)
+    implementation(libs.coil)
 }

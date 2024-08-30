@@ -1,5 +1,6 @@
 package ru.ivan.eremin.testchat.presentation.screen.registration
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -9,9 +10,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegistrationViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle
 ) : BaseViewModel<RegistrationUiState>() {
+
+    private val phone by lazy { savedStateHandle.get<String>("phone") }
+
     override fun createInitialState(): RegistrationUiState {
-        return RegistrationUiState()
+        return RegistrationUiState(
+            phone = phone
+        )
     }
 
     private var job: Job? = null

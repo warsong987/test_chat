@@ -21,9 +21,9 @@ data class AuthorizationUiState(
         get() = errorPhone == null && !phone.isNullOrEmpty()
 
     val isActionCheckAuthorization: Boolean
-        get() = errorPhone == null && phone.isNullOrEmpty() && codeError == null && code.isNullOrEmpty()
+        get() = errorPhone == null && !phone.isNullOrEmpty() && codeError == null && !code.isNullOrEmpty()
 }
 
 sealed interface AuthorizationEvent : UiEvent {
-    data class RegistrationIsSuccess(val userIsExist: Boolean, val phone: String) : AuthorizationEvent
+    data class Authorization(val userIsExist: Boolean, val phone: String) : AuthorizationEvent
 }
