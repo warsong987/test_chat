@@ -21,7 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
-import ru.ivan.eremin.testchat.domain.chats.ChatSelectedFile
+import ru.ivan.eremin.testchat.domain.chats.entity.ChatSelectedFile
 
 @Composable
 fun ChatSelectedFileView(

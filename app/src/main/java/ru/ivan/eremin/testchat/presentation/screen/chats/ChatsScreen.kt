@@ -33,7 +33,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.SubcomposeAsyncImage
-import ru.ivan.eremin.testchat.domain.chats.Chat
+import ru.ivan.eremin.testchat.domain.chats.entity.Chat
 import ru.ivan.eremin.testchat.presentation.components.BottomNavigate
 import ru.ivan.eremin.testchat.presentation.components.ErrorImage
 import ru.ivan.eremin.testchat.presentation.components.Screen

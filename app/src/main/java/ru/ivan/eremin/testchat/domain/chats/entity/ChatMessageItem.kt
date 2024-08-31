@@ -1,4 +1,4 @@
-package ru.ivan.eremin.testchat.domain.chats
+package ru.ivan.eremin.testchat.domain.chats.entity
 
 import androidx.compose.runtime.Immutable
 import java.util.Date as DateTime
@@ -70,37 +70,5 @@ sealed interface ChatMessageItem {
     ) : ChatMessageItem {
         override val type: ChatListMessageType
             get() = ChatListMessageType.RECEIVED_FILE
-    }
-
-    data class Nickname(
-        val nickname: String,
-        val operatorType: ChatAuthorType,
-        override val date: DateTime,
-        override val id: String
-    ) : ChatMessageItem {
-        override val type: ChatListMessageType
-            get() = ChatListMessageType.NICKNAME
-    }
-
-    data class Notice(
-        val notice: ChatNotice,
-        override val date: DateTime,
-        override val id: Long,
-    ) : ChatMessageItem {
-        override val type: ChatListMessageType
-            get() = ChatListMessageType.NOTICE
-    }
-
-    data class Rating(
-        val rating: Int,
-        val message: String,
-        val progress: SendMessageState,
-        override val date: DateTime,
-        override val id: Long,
-        val roundTop: Boolean,
-        val roundBottom: Boolean
-    ) : ChatMessageItem {
-        override val type: ChatListMessageType
-            get() = ChatListMessageType.RATING
     }
 }

@@ -492,4 +492,7 @@
     <string name="chat_status_connecting">Соединение…</string>
     <string name="chat_status_online">Онлайн</string>
     <string name="chat_status_typing">Печатает…</string>
+    <string name="chat_notice_success_estimation">Спасибо за оценку</string>
+    <string name="error_download_data">Не удалось загрузить данные</string>
+    <string name="action_retry">Повторить</string>
 </resources>

@@ -1,4 +1,4 @@
-package ru.ivan.eremin.testchat.domain.chats
+package ru.ivan.eremin.testchat.domain.chats.entity
 
 enum class FileType(
     val suffix: List<String>,

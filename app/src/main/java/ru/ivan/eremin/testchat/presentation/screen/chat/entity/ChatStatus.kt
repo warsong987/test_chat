@@ -5,7 +5,7 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.res.stringResource
 import ru.ivan.eremin.testchat.R
-import ru.ivan.eremin.testchat.domain.chats.ChatAuthor
+import ru.ivan.eremin.testchat.domain.chats.entity.ChatAuthor
 
 @Immutable
 sealed interface ChatStatus {

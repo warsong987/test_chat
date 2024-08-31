@@ -1,6 +1,6 @@
 package ru.ivan.eremin.testchat.presentation.screen.chats
 
-import ru.ivan.eremin.testchat.domain.chats.Chat
+import ru.ivan.eremin.testchat.domain.chats.entity.Chat
 import ru.ivan.eremin.testchat.presentation.core.UiError
 import ru.ivan.eremin.testchat.presentation.core.UiState
 

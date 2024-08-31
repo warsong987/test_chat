@@ -2,9 +2,10 @@ package ru.ivan.eremin.testchat.presentation.screen.chat
 
 import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
-import ru.ivan.eremin.testchat.domain.chats.ChatDetails
-import ru.ivan.eremin.testchat.domain.chats.ChatSelectedFile
-import ru.ivan.eremin.testchat.domain.chats.Message
+import ru.ivan.eremin.testchat.domain.chats.entity.ChatDetails
+import ru.ivan.eremin.testchat.domain.chats.entity.ChatMessageItem
+import ru.ivan.eremin.testchat.domain.chats.entity.ChatSelectedFile
+import ru.ivan.eremin.testchat.domain.chats.entity.Message
 import ru.ivan.eremin.testchat.presentation.core.BaseViewModel
 import ru.ivan.eremin.testchat.presentation.navigate.ChatRoute
 import javax.inject.Inject
@@ -47,6 +48,22 @@ class ChatViewModel @Inject constructor(
     }
 
     fun sendMessage() {
+
+    }
+
+    fun clickItem(item: ChatMessageItem) {
+
+    }
+
+    fun chooseFile() {
+
+    }
+
+    fun sendQuickAction(text: String) {
+
+    }
+
+    fun loadNextHistoryPage() {
 
     }
 }

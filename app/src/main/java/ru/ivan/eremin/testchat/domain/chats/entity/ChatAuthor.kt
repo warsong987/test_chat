@@ -1,4 +1,4 @@
-package ru.ivan.eremin.testchat.domain.chats
+package ru.ivan.eremin.testchat.domain.chats.entity
 
 import androidx.compose.runtime.Immutable
 
