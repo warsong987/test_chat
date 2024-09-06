@@ -1,5 +1,5 @@
 package ru.ivan.eremin.testchat.network.constant
 
 object UrlConstants {
-    const val BASE_URL = ""
+    const val BASE_URL = "https://plannerok.ru/"
 }

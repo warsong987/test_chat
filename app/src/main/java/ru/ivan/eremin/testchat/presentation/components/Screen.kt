@@ -1,6 +1,7 @@
 package ru.ivan.eremin.testchat.presentation.components
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,6 +16,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.TopAppBarScrollBehavior
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -46,7 +48,7 @@ fun Screen(
     contentWindowInsets: WindowInsets = WindowInsets.Companion.safeDrawing,
     backgroundColor: Color = MaterialTheme.colorScheme.background,
     floatingActionButtonPosition: FabPosition = FabPosition.Center,
-    content: @Composable () -> Unit,
+    content: @Composable BoxScope.() -> Unit,
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     ScreenContent(
@@ -79,34 +81,30 @@ fun Screen(
                 contentWindowInsets = WindowInsets(0.dp),
                 containerColor = backgroundColor,
                 content = { padding ->
-                    val pullToRefreshState = rememberPullToRefreshState(
-                        enabled = { onRefresh != null }
-                    )
-                    Box(
+                    val pullToRefreshState = rememberPullToRefreshState()
+                    PullToRefreshContainer(
                         modifier = Modifier
                             .fillMaxSize()
-                            .nestedScroll(pullToRefreshState.nestedScrollConnection)
                             .padding(padding)
-                            .clipToBounds()
-                    ) {
-                        content()
-                        PullToRefreshContainer(
-                            modifier = Modifier.align(Alignment.TopCenter),
-                            state = pullToRefreshState
-                        )
-                        if (pullToRefreshState.isRefreshing) {
-                            LaunchedEffect(true) {
-                                onRefresh?.invoke()
-                                refreshHandler.refresh()
+                            .clipToBounds(),
+                        state = pullToRefreshState,
+                        isRefreshing = isRefreshing,
+                        onRefresh = onRefresh,
+                        content = {
+                            content()
+                            if (isRefreshing) {
+                                LaunchedEffect(true) {
+                                    onRefresh?.invoke()
+                                    refreshHandler.refresh()
+                                }
+                            }
+                            LaunchedEffect(isRefreshing) {
+                                if (isRefreshing) pullToRefreshState.animateToThreshold()
+                                else pullToRefreshState.animateToHidden()
                             }
                         }
-                        LaunchedEffect(isRefreshing) {
-                            if (isRefreshing) pullToRefreshState.startRefresh()
-                            else pullToRefreshState.endRefresh()
-                        }
-                    }
+                    )
                 }
-
             )
         }
     )

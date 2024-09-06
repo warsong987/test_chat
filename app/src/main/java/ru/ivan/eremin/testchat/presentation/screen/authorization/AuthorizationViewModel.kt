@@ -3,13 +3,18 @@ package ru.ivan.eremin.testchat.presentation.screen.authorization
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import ru.ivan.eremin.testchat.domain.authorization.usecase.authorization.CheckAuthCodeUseCase
+import ru.ivan.eremin.testchat.domain.authorization.usecase.authorization.SendAuthCodeUseCase
 import ru.ivan.eremin.testchat.presentation.core.BaseViewModel
+import ru.ivan.eremin.testchat.presentation.core.ErrorHandler.uiErrorHandle
 import ru.ivan.eremin.testchat.presentation.utils.validator.isPhone
 import ru.ivan.eremin.testchat.presentation.utils.validator.isSmsCode
 import javax.inject.Inject
 
 @HiltViewModel
 class AuthorizationViewModel @Inject constructor(
+    private val sendPhoneUseCase: SendAuthCodeUseCase,
+    private val checkAuthCodeUseCase: CheckAuthCodeUseCase
 ) : BaseViewModel<AuthorizationUiState>() {
     override fun createInitialState(): AuthorizationUiState {
         return AuthorizationUiState()
@@ -22,8 +27,8 @@ class AuthorizationViewModel @Inject constructor(
                     isSuccessSendPhone = true
                 )
             }
-          /*  try {
-                val isSuccess = sendPhoneForGetSmsCodeUseCase(phone)
+            try {
+                val isSuccess = sendPhoneUseCase(phone)
                 updateState {
                     copy(
                         isSuccessSendPhone = isSuccess
@@ -35,7 +40,7 @@ class AuthorizationViewModel @Inject constructor(
                         error = e.uiErrorHandle()
                     )
                 }
-            }*/
+            }
         }
     }
 
@@ -46,7 +51,6 @@ class AuthorizationViewModel @Inject constructor(
                     events = events + AuthorizationEvent.Authorization(true, code)
                 )
             }
-            /*
             try {
                 val userIsExist = checkAuthCodeUseCase(phone, code)
                 updateState {
@@ -60,7 +64,7 @@ class AuthorizationViewModel @Inject constructor(
                         error = e.uiErrorHandle()
                     )
                 }
-            }*/
+            }
         }
     }
 

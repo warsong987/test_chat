@@ -8,4 +8,6 @@ data class ChatAuthor(
     val participantId: String,
     val type: ChatAuthorType,
     val avatar: String
-)
+) {
+
+}

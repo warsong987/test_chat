@@ -3,30 +3,35 @@
 package ru.ivan.eremin.testchat.presentation.screen.authorization
 
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -38,9 +43,11 @@ import kotlinx.coroutines.flow.filterNotNull
 import ru.ivan.eremin.testchat.R
 import ru.ivan.eremin.testchat.presentation.components.CodeTextField
 import ru.ivan.eremin.testchat.presentation.components.Screen
+import ru.ivan.eremin.testchat.presentation.components.phone.CountryPickerOutlinedTextField
+import ru.ivan.eremin.testchat.presentation.components.phone.data.CountryDetails
+import ru.ivan.eremin.testchat.presentation.components.phone.utils.CountryPickerUtils
 import ru.ivan.eremin.testchat.presentation.navigate.ChatsRoute
 import ru.ivan.eremin.testchat.presentation.navigate.RegistrationRoute
-import ru.ivan.eremin.testchat.presentation.utils.textfield.MaskVisualTransformation
 
 @Composable
 fun AuthorizationScreen(
@@ -71,7 +78,7 @@ fun AuthorizationScreen(
     )
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalFoundationApi::class)
 @Composable
 private fun AuthorizationScreenState(
     state: AuthorizationUiState,
@@ -90,33 +97,47 @@ private fun AuthorizationScreenState(
         modifier = Modifier.fillMaxSize(),
         uiError = state.error
     ) {
+        val selectedCountryState: MutableState<CountryDetails?> = remember {
+            mutableStateOf(null)
+        }
+
+        val visualPhone by remember(state.phone) {
+            mutableStateOf(
+                TextFieldValue(
+                    text = state.phone.orEmpty(),
+                    selection = TextRange(state.phone.orEmpty().length)
+                )
+            )
+        }
+        val context = LocalContext.current
         Column(
             Modifier
                 .fillMaxSize()
+                .verticalScroll(rememberScrollState())
                 .padding(16.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
-            TextField(
-                value = state.phone.orEmpty(),
-                onValueChange = {
-                    val phone = it.filter { it.isDigit() }
-                    if (phone.length <= 10) {
-                        onAction(Action.ChangePhone(phone))
+            CountryPickerOutlinedTextField(
+                modifier = Modifier.fillMaxWidth(),
+                mobileNumber = visualPhone,
+                country = selectedCountryState.value,
+                onMobileNumberChange = {
+                    CountryPickerUtils.searchCountryByNumber(
+                        context,
+                        it.text
+                    )?.let {
+                        selectedCountryState.value = it
                     }
+                    onAction(Action.ChangePhone(it.text))
                 },
-                isError = state.errorPhone != null,
-                supportingText = {
-                    if (state.errorPhone != null) {
-                        Text(
-                            text = state.errorPhone.getErrorText(),
-                            color = MaterialTheme.colorScheme.errorContainer
-                        )
+                onCountrySelected = {
+                    if (selectedCountryState.value != it || selectedCountryState.value == null) {
+                        selectedCountryState.value = it
                     }
+                    onAction(Action.ChangePhone(it.countryPhoneNumberCode))
                 },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
-                visualTransformation = MaskVisualTransformation("+7 (###) ###-##-##")
+                defaultCountryCode = selectedCountryState.value?.countryCode
             )
 
             if (state.isSuccessSendPhone) {
@@ -169,7 +190,7 @@ private fun eventHandler(event: AuthorizationEvent, navHostController: NavHostCo
         is AuthorizationEvent.Authorization -> {
             if (event.userIsExist) {
                 navHostController.navigate(ChatsRoute.route) {
-                    params( navHostController)
+                    params(navHostController)
                 }
             } else {
                 navHostController.navigate("${RegistrationRoute.route}?phone=${event.phone}") {
