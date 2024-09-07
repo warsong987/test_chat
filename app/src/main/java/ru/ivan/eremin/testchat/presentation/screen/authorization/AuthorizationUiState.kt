@@ -26,4 +26,5 @@ data class AuthorizationUiState(
 
 sealed interface AuthorizationEvent : UiEvent {
     data class Authorization(val userIsExist: Boolean, val phone: String) : AuthorizationEvent
+    data class OpenRegistration(val phone: String) : AuthorizationEvent
 }

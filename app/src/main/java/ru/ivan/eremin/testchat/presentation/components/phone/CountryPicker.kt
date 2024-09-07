@@ -21,8 +21,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import ru.ivan.eremin.testchat.R
 import ru.ivan.eremin.testchat.presentation.components.phone.data.CountryDetails
 import ru.ivan.eremin.testchat.presentation.components.phone.data.CountryPickerProperties
 import ru.ivan.eremin.testchat.presentation.components.phone.data.Dimensions
@@ -50,38 +52,45 @@ fun CountryPicker(
             FunctionHelper.getAllCountries(context)
                 .filter { updatedCountriesList.contains(it.countryCode) }
         }
-    } 
-    var selectedCountry by remember(country) {
-        val selectedCountry =
-            country ?: FunctionHelper.getDefaultSelectedCountry(
-                context,
-                defaultCountryCode?.lowercase(),
-                countryList
+    }
+    val debug = LocalInspectionMode.current
+    if (!LocalInspectionMode.current) {
+        var selectedCountry by remember(country) {
+            val selectedCountry =
+                country ?: if (!debug) {
+                    FunctionHelper.getDefaultSelectedCountry(
+                        context,
+                        defaultCountryCode?.lowercase(),
+                        countryList
+                    )
+                } else {
+                    previewCountryDetails
+                }
+            onCountrySelected(selectedCountry)
+            mutableStateOf(selectedCountry)
+        }
+        if (openCountrySelectionDialog) {
+            CountrySelectionDialog(
+                countryList = countryList,
+                onDismissRequest = {
+                    openCountrySelectionDialog = false
+                },
+                onSelected = {
+                    selectedCountry = it
+                    openCountrySelectionDialog = false
+                    onCountrySelected(it)
+                },
             )
-        onCountrySelected(selectedCountry)
-        mutableStateOf(selectedCountry)
-    }
-    if (openCountrySelectionDialog) {
-        CountrySelectionDialog(
-            countryList = countryList,
-            onDismissRequest = {
-                openCountrySelectionDialog = false
-            },
-            onSelected = {
-                selectedCountry = it
-                openCountrySelectionDialog = false
-                onCountrySelected(it)
-            },
-        )
-    }
-    SelectedCountrySection(
-        defaultPaddingValues = defaultPaddingValues,
-        selectedCountry = selectedCountry,
-        countryPickerProperties = countryPickerProperties,
-        countryFlagDimensions = countryFlagDimensions,
-        modifier = modifier
-    ) {
-        openCountrySelectionDialog = !openCountrySelectionDialog
+        }
+        SelectedCountrySection(
+            defaultPaddingValues = defaultPaddingValues,
+            selectedCountry = selectedCountry,
+            countryPickerProperties = countryPickerProperties,
+            countryFlagDimensions = countryFlagDimensions,
+            modifier = modifier
+        ) {
+            openCountrySelectionDialog = !openCountrySelectionDialog
+        }
     }
 }
 
@@ -117,3 +126,11 @@ private fun SelectedCountrySection(
         Icon(imageVector = Icons.Default.ArrowDropDown, contentDescription = null)
     }
 }
+
+private val previewCountryDetails = CountryDetails(
+    "ru",
+    "+7 9",
+    "Russian Federation",
+    R.drawable.ru,
+    "12 345-67-89"
+)

@@ -1,4 +1,4 @@
-package ru.ivan.eremin.testchat.data.service
+package ru.ivan.eremin.testchat.data.service.auth
 
 import retrofit2.http.Body
 import retrofit2.http.POST

@@ -11,12 +11,16 @@ import ru.ivan.eremin.testchat.R
 const val MIN_LENGTH_PHONE = 10
 private const val REGEX_NOT_NUM = "\\D+"
 
-fun String.isPhone(): PhoneValidationError? {
+fun String.isPhone(minLengthPhone: Int?, countryPhoneCode: String): PhoneValidationError? {
     return when {
+        this == countryPhoneCode -> null
+
         isEmpty() || replace(
             REGEX_NOT_NUM.toRegex(),
             ""
-        ).length < MIN_LENGTH_PHONE -> PhoneValidationError.Length
+        ).length < (minLengthPhone ?: MIN_LENGTH_PHONE) -> PhoneValidationError.Length(
+            minLengthPhone ?: 0
+        )
 
         !Patterns.PHONE.matcher(this).matches() -> PhoneValidationError.InvalidCharacters
         else -> null
@@ -27,7 +31,7 @@ fun String.isPhone(): PhoneValidationError? {
 sealed interface PhoneValidationError : ValidatorResult {
 
     @Immutable
-    data object Length : PhoneValidationError
+    data class Length(val length: Int) : PhoneValidationError
 
 
     @Immutable
@@ -37,7 +41,7 @@ sealed interface PhoneValidationError : ValidatorResult {
     @ReadOnlyComposable
     override fun getErrorText(): String {
         return when (this) {
-            Length -> stringResource(R.string.validator_phone_length_error)
+            is Length -> stringResource(R.string.validator_phone_length_error, length)
             InvalidCharacters -> stringResource(R.string.validator_phone_incorrect)
         }
     }

@@ -15,6 +15,7 @@ import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.OutlinedTextFieldDefaults.Container
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -111,14 +112,14 @@ internal fun PickerOutlinedTextField(
                     interactionSource = interactionSource,
                     colors = colors,
                     container = {
-                        OutlinedTextFieldDefaults.ContainerBox(
-                            enabled,
-                            isError,
-                            interactionSource,
-                            colors,
-                            shape,
-                            borderThickness.focusedBorderThickness,
-                            borderThickness.unfocusedBorderThickness
+                        Container(
+                            enabled = enabled,
+                            isError = isError,
+                            interactionSource = interactionSource,
+                            colors = colors,
+                            shape = shape,
+                            focusedBorderThickness = borderThickness.focusedBorderThickness,
+                            unfocusedBorderThickness = borderThickness.unfocusedBorderThickness,
                         )
                     }
                 )

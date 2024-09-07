@@ -52,1452 +52,1599 @@ object FunctionHelper {
         }
     }
 
+    fun CountryDetails.getMask(): String {
+
+        return "${this.countryPhoneNumberCode}${
+            if (countryCode == "ru" || countryCode == "kz") {
+                ""
+            } else {
+                " "
+            }
+        }${
+            this.mask
+        }".map { if (it.isDigit()) "#" else it }.joinToString().replace(", ", "")
+    }
+
+    fun CountryDetails.getLengthPhone(): Int {
+        val mask = getMask()
+        return mask.filter { it == '#' }.length
+    }
+
     fun getAllCountries(context: Context): List<CountryDetails> = listOf(
         CountryDetails(
             countryCode = "ad",
             "+376",
             context.getString(R.string.andorra),
             R.drawable.ad,
+            context.getString(R.string.andorra_hint)
         ),
         CountryDetails(
             countryCode = "ae",
             "+971",
             context.getString(R.string.united_arab_emirates_uae),
             R.drawable.ae,
+            context.getString(R.string.united_arab_emirates_hint)
         ),
         CountryDetails(
             countryCode = "af",
             "+93",
             context.getString(R.string.afghanistan),
             R.drawable.af,
+            context.getString(R.string.afganistan_hint)
         ),
         CountryDetails(
             countryCode = "ag",
             "+1",
             context.getString(R.string.antigua_and_barbuda),
             R.drawable.ag,
+            context.getString(R.string.antigua_and_barbuda_hint)
         ),
         CountryDetails(
             "ai",
             "+1",
             context.getString(R.string.anguilla),
             R.drawable.ai,
+            context.getString(R.string.anguilla_hint)
         ),
         CountryDetails(
             "al",
             "+355",
             context.getString(R.string.albania),
             R.drawable.al,
+            context.getString(R.string.albania_hint)
         ),
         CountryDetails(
             "am",
             "+374",
             context.getString(R.string.armenia),
             R.drawable.am,
+            context.getString(R.string.armenia_hint)
         ),
         CountryDetails(
             "ao",
             "+244",
             context.getString(R.string.angola),
             R.drawable.ao,
+            context.getString(R.string.angola_hint)
         ),
         CountryDetails(
             "aq",
             "+672",
             context.getString(R.string.antarctica),
             R.drawable.aq,
+            context.getString(R.string.antarctica_hint)
         ),
         CountryDetails(
             "ar",
             "+54",
             context.getString(R.string.argentina),
             R.drawable.ar,
+            context.getString(R.string.argentina_hint)
         ),
         CountryDetails(
             "as",
             "+1",
             context.getString(R.string.american_samoa),
-            R.drawable.`as`
+            R.drawable.`as`,
+            context.getString(R.string.american_samoa_hint)
         ),
         CountryDetails(
             "at",
             "+43",
             context.getString(R.string.austria),
             R.drawable.at,
+            context.getString(R.string.austria_hint)
         ),
         CountryDetails(
             "au",
             "+61",
             context.getString(R.string.australia),
             R.drawable.au,
+            context.getString(R.string.australia_hint)
         ),
         CountryDetails(
             "aw",
             "+297",
             context.getString(R.string.aruba),
             R.drawable.aw,
+            context.getString(R.string.aruba_hint)
         ),
         CountryDetails(
             "ax",
             "+358",
             context.getString(R.string.land_islands),
-            R.drawable.ax
+            R.drawable.ax,
+            context.getString(R.string.aland_islands_hint)
         ),
         CountryDetails(
             "az",
             "+994",
             context.getString(R.string.azerbaijan),
-            R.drawable.az
+            R.drawable.az,
+            context.getString(R.string.azerbaijan_hint)
         ),
         CountryDetails(
             "ba",
             "+387",
             context.getString(R.string.bosnia_and_herzegovina),
-            R.drawable.ba
+            R.drawable.ba,
+            context.getString(R.string.bosnia_hint)
         ),
         CountryDetails(
             "bb",
             "+1",
             context.getString(R.string.barbados),
-            R.drawable.bb
+            R.drawable.bb,
+            context.getString(R.string.barbados_hint)
         ),
         CountryDetails(
             "bd",
             "+880",
             context.getString(R.string.bangladesh),
-            R.drawable.bd
+            R.drawable.bd,
+            context.getString(R.string.bangladesh_hint)
         ),
         CountryDetails(
             "be",
             "+32",
             context.getString(R.string.belgium),
-            R.drawable.be
+            R.drawable.be,
+            context.getString(R.string.belgium_hint)
         ),
         CountryDetails(
             "bf",
             "+226",
             context.getString(R.string.burkina_faso),
-            R.drawable.bf
+            R.drawable.bf,
+            context.getString(R.string.burkina_faso_hint)
         ),
         CountryDetails(
             "bg",
             "+359",
             context.getString(R.string.bulgaria),
-            R.drawable.bg
+            R.drawable.bg,
+            context.getString(R.string.bulgaria_hint)
         ),
         CountryDetails(
             "bh",
             "+973",
             context.getString(R.string.bahrain),
-            R.drawable.bh
+            R.drawable.bh,
+            context.getString(R.string.bahrain_hint)
         ),
         CountryDetails(
             "bi",
             "+257",
             context.getString(R.string.burundi),
-            R.drawable.bi
+            R.drawable.bi,
+            context.getString(R.string.burundi_hint)
         ),
         CountryDetails(
             "bj",
             "+229",
             context.getString(R.string.benin),
-            R.drawable.bj
+            R.drawable.bj,
+            context.getString(R.string.benin_hint)
         ),
         CountryDetails(
             "bl",
             "+590",
             context.getString(R.string.saint_barth_lemy),
-            R.drawable.bl
+            R.drawable.bl,
+            context.getString(R.string.saint_barhelemy_hint)
         ),
         CountryDetails(
             "bm",
             "+1",
             context.getString(R.string.bermuda),
-            R.drawable.bm
+            R.drawable.bm,
+            context.getString(R.string.bermuda_hint)
         ),
         CountryDetails(
             "bn",
             "+673",
             context.getString(R.string.brunei_darussalam),
-            R.drawable.bn
+            R.drawable.bn,
+            context.getString(R.string.brunei_darussalam_hint)
         ),
         CountryDetails(
             "bo",
             "+591",
             context.getString(R.string.bolivia_plurinational_state_of),
-            R.drawable.bo
+            R.drawable.bo,
+            context.getString(R.string.bolivia_hint)
         ),
         CountryDetails(
             "br",
             "+55",
             context.getString(R.string.brazil),
-            R.drawable.br
+            R.drawable.br,
+            context.getString(R.string.brazil_hint)
         ),
         CountryDetails(
             "bs",
             "+1",
             context.getString(R.string.bahamas),
-            R.drawable.bs
+            R.drawable.bs,
+            context.getString(R.string.bahamas_hint)
         ),
         CountryDetails(
             "bt",
             "+975",
             context.getString(R.string.bhutan),
-            R.drawable.bt
+            R.drawable.bt,
+            context.getString(R.string.bhutan_hint)
         ),
         CountryDetails(
             "bw",
             "+267",
             context.getString(R.string.botswana),
-            R.drawable.bw
+            R.drawable.bw,
+            context.getString(R.string.botswana_hint)
         ),
         CountryDetails(
             "by",
             "+375",
             context.getString(R.string.belarus),
-            R.drawable.by
+            R.drawable.by,
+            context.getString(R.string.belarus_hint)
         ),
         CountryDetails(
             "bz",
             "+501",
             context.getString(R.string.belize),
-            R.drawable.bz
+            R.drawable.bz,
+            context.getString(R.string.belize_hint)
         ),
         CountryDetails(
             "ca",
             "+1",
             context.getString(R.string.canada),
-            R.drawable.ca
+            R.drawable.ca,
+            context.getString(R.string.canada_hint)
         ),
         CountryDetails(
             "cc",
             "+61",
             context.getString(R.string.cocos_keeling_islands),
-            R.drawable.cc
+            R.drawable.cc,
+            context.getString(R.string.cocos_hint)
         ),
         CountryDetails(
             "cd",
             "+243",
             context.getString(R.string.congo_the_democratic_republic_of_the),
-            R.drawable.cd
+            R.drawable.cd,
+            context.getString(R.string.congo_hint)
         ),
         CountryDetails(
             "cf",
             "+236",
             context.getString(R.string.central_african_republic),
-            R.drawable.cf
+            R.drawable.cf,
+            context.getString(R.string.central_african_hint)
         ),
         CountryDetails(
             "cg",
             "+242",
             context.getString(R.string.congo),
-            R.drawable.cg
+            R.drawable.cg,
+            context.getString(R.string.congo_hint)
         ),
         CountryDetails(
             "ch",
             "+41",
             context.getString(R.string.switzerland),
-            R.drawable.ch
+            R.drawable.ch,
+            context.getString(R.string.switzerland_hint)
         ),
         CountryDetails(
             "ci",
             "+225",
             context.getString(R.string.c_te_d_ivoire),
-            R.drawable.ci
+            R.drawable.ci,
+            context.getString(R.string.cote_dlvoire_hint)
         ),
         CountryDetails(
             "ck",
             "+682",
             context.getString(R.string.cook_islands),
-            R.drawable.ck
+            R.drawable.ck,
+            context.getString(R.string.cook_islands_hint)
         ),
         CountryDetails(
             "cl",
             "+56",
             context.getString(R.string.chile),
-            R.drawable.cl
+            R.drawable.cl,
+            context.getString(R.string.chile_hint)
         ),
         CountryDetails(
             "cm",
             "+237",
             context.getString(R.string.cameroon),
-            R.drawable.cm
+            R.drawable.cm,
+            context.getString(R.string.cameroon_hint)
         ),
         CountryDetails(
             "cn",
             "+86",
             context.getString(R.string.china),
-            R.drawable.cn
+            R.drawable.cn,
+            context.getString(R.string.china_hint)
         ),
         CountryDetails(
             "co",
             "+57",
             context.getString(R.string.colombia),
-            R.drawable.co
+            R.drawable.co,
+            context.getString(R.string.colombia_hint)
         ),
         CountryDetails(
             "cr",
             "+506",
             context.getString(R.string.costa_rica),
-            R.drawable.cr
+            R.drawable.cr,
+            context.getString(R.string.costa_rica_hint)
         ),
         CountryDetails(
             "cu",
             "+53",
             context.getString(R.string.cuba),
-            R.drawable.cu
+            R.drawable.cu,
+            context.getString(R.string.cuba_hint)
         ),
         CountryDetails(
             "cv",
             "+238",
             context.getString(R.string.cape_verde),
-            R.drawable.cv
+            R.drawable.cv,
+            context.getString(R.string.cape_verde_hint)
         ),
         CountryDetails(
             "cw",
             "+599",
             context.getString(R.string.cura_ao),
-            R.drawable.cw
+            R.drawable.cw,
+            context.getString(R.string.curacao_hint)
         ),
         CountryDetails(
             "cx",
             "+61",
             context.getString(R.string.christmas_island),
-            R.drawable.cx
+            R.drawable.cx,
+            context.getString(R.string.christmas_island_hint)
         ),
         CountryDetails(
             "cy",
             "+357",
             context.getString(R.string.cyprus),
-            R.drawable.cy
+            R.drawable.cy,
+            context.getString(R.string.cyprus_hint)
         ),
         CountryDetails(
             "cz",
             "+420",
             context.getString(R.string.czech_republic),
-            R.drawable.cz
+            R.drawable.cz,
+            context.getString(R.string.czech_republic_hint)
         ),
         CountryDetails(
             "de",
             "+49",
             context.getString(R.string.germany),
-            R.drawable.de
+            R.drawable.de,
+            context.getString(R.string.germany_hint)
         ),
         CountryDetails(
             "dj",
             "+253",
             context.getString(R.string.djibouti),
-            R.drawable.dj
+            R.drawable.dj,
+            context.getString(R.string.djibouti_hint)
         ),
         CountryDetails(
             "dk",
             "+45",
             context.getString(R.string.denmark),
-            R.drawable.dk
+            R.drawable.dk,
+            context.getString(R.string.denmark_hint)
         ),
         CountryDetails(
             "dm",
             "+1",
             context.getString(R.string.dominica),
-            R.drawable.dm
+            R.drawable.dm,
+            context.getString(R.string.dominica_hint)
         ),
         CountryDetails(
             "do",
             "+1",
             context.getString(R.string.dominican_republic),
-            R.drawable.ic_do
+            R.drawable.ic_do,
+            context.getString(R.string.dominician_republic_hint)
         ),
         CountryDetails(
             "dz",
             "+213",
             context.getString(R.string.algeria),
-            R.drawable.dz
+            R.drawable.dz,
+            context.getString(R.string.algeria_hint)
         ),
         CountryDetails(
             "ec",
             "+593",
             context.getString(R.string.ecuador),
-            R.drawable.ec
+            R.drawable.ec,
+            context.getString(R.string.ecuador_hint)
         ),
         CountryDetails(
             "ee",
             "+372",
             context.getString(R.string.estonia),
-            R.drawable.ee
+            R.drawable.ee,
+            context.getString(R.string.estonia_hint)
         ),
         CountryDetails(
             "eg",
             "+20",
             context.getString(R.string.egypt),
-            R.drawable.eg
+            R.drawable.eg,
+            context.getString(R.string.egypt_hint)
         ),
         CountryDetails(
             "er",
             "+291",
             context.getString(R.string.eritrea),
-            R.drawable.er
+            R.drawable.er,
+            context.getString(R.string.eritrea_hint)
         ),
         CountryDetails(
             "es",
             "+34",
             context.getString(R.string.spain),
-            R.drawable.es
+            R.drawable.es,
+            context.getString(R.string.spain_hint)
         ),
         CountryDetails(
             "et",
             "+251",
             context.getString(R.string.ethiopia),
-            R.drawable.et
+            R.drawable.et,
+            context.getString(R.string.ethiopia_hint)
         ),
         CountryDetails(
             "fi",
             "+358",
             context.getString(R.string.finland),
-            R.drawable.fi
+            R.drawable.fi,
+            context.getString(R.string.finland_hint)
         ),
         CountryDetails(
             "fj",
             "+679",
             context.getString(R.string.fiji),
-            R.drawable.fj
+            R.drawable.fj,
+            context.getString(R.string.fiji_hint)
         ),
         CountryDetails(
             "fk",
             "+500",
             context.getString(R.string.falkland_islands_malvinas),
-            R.drawable.fk
+            R.drawable.fk,
+            context.getString(R.string.falkland_islands_hint)
         ),
         CountryDetails(
             "fm",
             "+691",
             context.getString(R.string.micronesia_federated_states_of),
-            R.drawable.fm
+            R.drawable.fm,
+            context.getString(R.string.micronesia_federated_states_of)
         ),
         CountryDetails(
             "fo",
             "+298",
             context.getString(R.string.faroe_islands),
-            R.drawable.fo
+            R.drawable.fo,
+            context.getString(R.string.faroe_islands_hint)
         ),
         CountryDetails(
             "fr",
             "+33",
             context.getString(R.string.france),
-            R.drawable.fr
+            R.drawable.fr,
+            context.getString(R.string.france_hint)
         ),
         CountryDetails(
             "ga",
             "+241",
             context.getString(R.string.gabon),
-            R.drawable.ga
+            R.drawable.ga,
+            context.getString(R.string.gabon_hint)
         ),
         CountryDetails(
             "gb",
             "+44",
             context.getString(R.string.united_kingdom),
-            R.drawable.gb
+            R.drawable.gb,
+            context.getString(R.string.united_kingdom_hint)
         ),
         CountryDetails(
             "gd",
             "+1",
             context.getString(R.string.grenada),
-            R.drawable.gd
+            R.drawable.gd,
+            context.getString(R.string.grenada_hint)
         ),
         CountryDetails(
             "ge",
             "+995",
             context.getString(R.string.georgia),
-            R.drawable.ge
+            R.drawable.ge,
+            context.getString(R.string.georgia_hint)
         ),
         CountryDetails(
             "gf",
             "+594",
             context.getString(R.string.french_guyana),
-            R.drawable.gf
+            R.drawable.gf,
+            context.getString(R.string.french_guyana_hint)
         ),
         CountryDetails(
             "gh",
             "+233",
             context.getString(R.string.ghana),
-            R.drawable.gh
-        ),
-        CountryDetails(
-            "gi",
-            "+350",
-            context.getString(R.string.gibraltar),
-            R.drawable.gi
+            R.drawable.gh,
+            context.getString(R.string.ghana_hint)
         ),
         CountryDetails(
             "gl",
             "+299",
             context.getString(R.string.greenland),
-            R.drawable.gl
+            R.drawable.gl,
+            context.getString(R.string.greenland_hint)
         ),
         CountryDetails(
             "gm",
             "+220",
             "Gambia",
-            R.drawable.gm
+            R.drawable.gm,
+            context.getString(R.string.gambia_hint)
         ),
         CountryDetails(
             "gn",
             "+224",
             context.getString(R.string.guinea),
-            R.drawable.gn
+            R.drawable.gn,
+            context.getString(R.string.guinea_hint)
         ),
         CountryDetails(
             "gp",
             "+450",
             context.getString(R.string.guadeloupe),
-            R.drawable.gp
+            R.drawable.gp,
+            context.getString(R.string.guadeloupe_hint)
         ),
         CountryDetails(
             "gq",
             "+240",
             context.getString(R.string.equatorial_guinea),
-            R.drawable.gq
+            R.drawable.gq,
+            context.getString(R.string.equatorial_guinea_hint)
         ),
         CountryDetails(
             "gr",
             "+30",
             context.getString(R.string.greece),
-            R.drawable.gr
+            R.drawable.gr,
+            context.getString(R.string.greece_hint)
         ),
         CountryDetails(
             "gt",
             "+502",
             context.getString(R.string.guatemala),
-            R.drawable.gt
+            R.drawable.gt,
+            context.getString(R.string.guatemala_hint)
         ),
         CountryDetails(
             "gu",
             "+1",
             context.getString(R.string.guam),
-            R.drawable.gu
+            R.drawable.gu,
+            context.getString(R.string.guam_hint)
         ),
         CountryDetails(
             "gw",
             "+245",
             context.getString(R.string.guinea_bissau),
-            R.drawable.gw
+            R.drawable.gw,
+            context.getString(R.string.guinea_bissau_hint)
         ),
         CountryDetails(
             "gy",
             "+592",
             context.getString(R.string.guyana),
-            R.drawable.gy
+            R.drawable.gy,
+            context.getString(R.string.guyana_hint)
         ),
         CountryDetails(
             "hk",
             "+852",
             context.getString(R.string.hong_kong),
-            R.drawable.hk
+            R.drawable.hk,
+            context.getString(R.string.hong_kong_hint)
         ),
         CountryDetails(
             "hn",
             "+504",
             context.getString(R.string.honduras),
-            R.drawable.hn
+            R.drawable.hn,
+            context.getString(R.string.honduras_hint)
         ),
         CountryDetails(
             "hr",
             "+385",
             context.getString(R.string.croatia),
-            R.drawable.hr
+            R.drawable.hr,
+            context.getString(R.string.croatia_hint)
         ),
         CountryDetails(
             "ht",
             "+509",
             context.getString(R.string.haiti),
-            R.drawable.ht
+            R.drawable.ht,
+            context.getString(R.string.haiti_hint)
         ),
         CountryDetails(
             "hu",
             "+36",
             context.getString(R.string.hungary),
-            R.drawable.hu
+            R.drawable.hu,
+            context.getString(R.string.hungary_hint)
         ),
         CountryDetails(
             "id",
             "+62",
             context.getString(R.string.indonesia),
-            R.drawable.id
+            R.drawable.id,
+            context.getString(R.string.indonesia_hint)
         ),
         CountryDetails(
             "ie",
             "+353",
             context.getString(R.string.ireland),
-            R.drawable.ie
+            R.drawable.ie,
+            context.getString(R.string.ireland_hint)
         ),
         CountryDetails(
             "il",
             "+972",
             context.getString(R.string.israel),
-            R.drawable.il
-        ),
-        CountryDetails(
-            "im",
-            "+44",
-            context.getString(R.string.isle_of_man),
-            R.drawable.im
-        ),
-        CountryDetails(
-            "is",
-            "+354",
-            context.getString(R.string.iceland),
-            R.drawable.`is`
+            R.drawable.il,
+            context.getString(R.string.israil_hint)
         ),
         CountryDetails(
             "in",
             "+91",
             context.getString(R.string.india),
-            R.drawable.`in`
+            R.drawable.`in`,
+            context.getString(R.string.india)
         ),
         CountryDetails(
             "io",
             "+246",
             context.getString(R.string.british_indian_ocean_territory),
-            R.drawable.io
+            R.drawable.io,
+            context.getString(R.string.british_indian_ocean_territory)
         ),
         CountryDetails(
             "iq",
             "+964",
             context.getString(R.string.iraq),
-            R.drawable.iq
+            R.drawable.iq,
+            context.getString(R.string.iraq_hint)
         ),
         CountryDetails(
             "ir",
             "+98",
             context.getString(R.string.iran_islamic_republic_of),
-            R.drawable.ir
+            R.drawable.ir,
+            context.getString(R.string.iran_islamic_republic_of)
         ),
         CountryDetails(
             "it",
             "+39",
             context.getString(R.string.italy),
-            R.drawable.it
+            R.drawable.it,
+            context.getString(R.string.italia_hint)
         ),
         CountryDetails(
             "je",
             "+44",
             context.getString(R.string.jersey),
-            R.drawable.je
+            R.drawable.je,
+            context.getString(R.string.jersey_hint)
         ),
         CountryDetails(
             "jm",
             "+1",
             context.getString(R.string.jamaica),
-            R.drawable.jm
+            R.drawable.jm,
+            context.getString(R.string.jamaica_hint)
         ),
         CountryDetails(
             "jo",
             "+962",
             context.getString(R.string.jordan),
-            R.drawable.jo
+            R.drawable.jo,
+            context.getString(R.string.jordan_hint)
         ),
         CountryDetails(
             "jp",
             "+81",
             context.getString(R.string.japan),
-            R.drawable.jp
+            R.drawable.jp,
+            context.getString(R.string.japan_hint)
         ),
         CountryDetails(
             "ke",
             "+254",
             context.getString(R.string.kenya),
-            R.drawable.ke
+            R.drawable.ke,
+            context.getString(R.string.kenya_hint)
         ),
         CountryDetails(
             "kg",
             "+996",
             context.getString(R.string.kyrgyzstan),
-            R.drawable.kg
+            R.drawable.kg,
+            context.getString(R.string.kyrgyzstan_hint)
         ),
         CountryDetails(
             "kh",
             "+855",
             context.getString(R.string.cambodia),
-            R.drawable.kh
-        ),
-        CountryDetails(
-            "ki",
-            "+686",
-            context.getString(R.string.kiribati),
-            R.drawable.ki
+            R.drawable.kh,
+            context.getString(R.string.cambodia_hint)
         ),
         CountryDetails(
             "km",
             "+269",
             context.getString(R.string.comoros),
-            R.drawable.km
+            R.drawable.km,
+            context.getString(R.string.comoros_hint)
         ),
         CountryDetails(
             "kn",
             "+1",
             context.getString(R.string.saint_kitts_and_nevis),
-            R.drawable.kn
+            R.drawable.kn,
+            context.getString(R.string.saint_kitts_hint)
         ),
         CountryDetails(
             "kp",
             "+850",
             context.getString(R.string.north_korea),
-            R.drawable.kp
+            R.drawable.kp,
+            context.getString(R.string.north_korea_hint)
         ),
         CountryDetails(
             "kr",
             "+82",
             context.getString(R.string.south_korea),
-            R.drawable.kr
+            R.drawable.kr,
+            context.getString(R.string.south_korea_hint)
         ),
         CountryDetails(
             "kw",
             "+965",
             context.getString(R.string.kuwait),
-            R.drawable.kw
+            R.drawable.kw,
+            context.getString(R.string.kuwait_hint)
         ),
         CountryDetails(
             "ky",
             "+1",
             context.getString(R.string.cayman_islands),
-            R.drawable.ky
+            R.drawable.ky,
+            context.getString(R.string.cayman_islands_hint)
         ),
         CountryDetails(
             "kz",
-            "+77",
+            "+7 7",
             context.getString(R.string.kazakhstan),
-            R.drawable.kz
-        ),
-        CountryDetails(
-            "la",
-            "+856",
-            context.getString(R.string.lao_people_s_democratic_republic),
-            R.drawable.la
+            R.drawable.kz,
+            context.getString(R.string.kazakhstan_hint)
         ),
         CountryDetails(
             "lb",
             "+961",
             context.getString(R.string.lebanon),
-            R.drawable.lb
+            R.drawable.lb,
+            context.getString(R.string.lebanon_hint)
         ),
         CountryDetails(
             "lc",
             "+1",
             context.getString(R.string.saint_lucia),
-            R.drawable.lc
-        ),
-        CountryDetails(
-            "li",
-            "+423",
-            context.getString(R.string.liechtenstein),
-            R.drawable.li
-        ),
-        CountryDetails(
-            "lk",
-            "+94",
-            context.getString(R.string.sri_lanka),
-            R.drawable.lk
+            R.drawable.lc,
+            context.getString(R.string.saint_lucia_hint)
         ),
         CountryDetails(
             "lr",
             "+231",
             context.getString(R.string.liberia),
-            R.drawable.lr
+            R.drawable.lr,
+            context.getString(R.string.liberia_hint)
         ),
         CountryDetails(
             "ls",
             "+266",
             context.getString(R.string.lesotho),
-            R.drawable.ls
+            R.drawable.ls,
+            context.getString(R.string.lesotho_hint)
         ),
         CountryDetails(
             "lt",
             "+370",
             context.getString(R.string.lithuania),
-            R.drawable.lt
+            R.drawable.lt,
+            context.getString(R.string.lithuania_hint)
         ),
         CountryDetails(
             "lu",
             "+352",
             context.getString(R.string.luxembourg),
-            R.drawable.lu
+            R.drawable.lu,
+            context.getString(R.string.luxembourg_hint)
         ),
         CountryDetails(
             "lv",
             "+371",
             context.getString(R.string.latvia),
-            R.drawable.lv
+            R.drawable.lv,
+            context.getString(R.string.latvia_hint)
         ),
         CountryDetails(
             "ly",
             "+218",
             context.getString(R.string.libya),
-            R.drawable.ly
-        ),
-        CountryDetails(
-            "ma",
-            "+212",
-            context.getString(R.string.morocco),
-            R.drawable.ma
+            R.drawable.ly,
+            context.getString(R.string.libya_hint)
         ),
         CountryDetails(
             "mc",
             "+377",
             context.getString(R.string.monaco),
-            R.drawable.mc
+            R.drawable.mc,
+            context.getString(R.string.monaco_hint)
         ),
         CountryDetails(
             "md",
             "+373",
             context.getString(R.string.moldova_republic_of),
-            R.drawable.md
+            R.drawable.md,
+            context.getString(R.string.moldova_hint)
         ),
         CountryDetails(
             "me",
             "+382",
             context.getString(R.string.montenegro),
-            R.drawable.me
+            R.drawable.me,
+            context.getString(R.string.montenegro_hint)
         ),
         CountryDetails(
             "mf",
             "+590",
             context.getString(R.string.saint_martin),
-            R.drawable.mf
+            R.drawable.mf,
+            context.getString(R.string.saint_martin_hint)
         ),
         CountryDetails(
             "mg",
             "+261",
             context.getString(R.string.madagascar),
-            R.drawable.mg
+            R.drawable.mg,
+            context.getString(R.string.madagascar_hint)
         ),
         CountryDetails(
             "mh",
             "+692",
             context.getString(R.string.marshall_islands),
-            R.drawable.mh
-        ),
-        CountryDetails(
-            "mk",
-            "+389",
-            context.getString(R.string.macedonia_fyrom),
-            R.drawable.mk
+            R.drawable.mh,
+            context.getString(R.string.marshall_islands_hint)
         ),
         CountryDetails(
             "ml",
             "+223",
             context.getString(R.string.mali),
-            R.drawable.ml
+            R.drawable.ml,
+            context.getString(R.string.mali_hint)
         ),
         CountryDetails(
             "mm",
             "+95",
             context.getString(R.string.myanmar),
-            R.drawable.mm
+            R.drawable.mm,
+            context.getString(R.string.myanmar_hint)
         ),
         CountryDetails(
             "mn",
             "+976",
             context.getString(R.string.mongolia),
-            R.drawable.mn
+            R.drawable.mn,
+            context.getString(R.string.mongolia_hint)
         ),
         CountryDetails(
             "mo",
             "+853",
             context.getString(R.string.macau),
-            R.drawable.mo
+            R.drawable.mo,
+            context.getString(R.string.macau_hint)
         ),
         CountryDetails(
             "mp",
             "+1",
             context.getString(R.string.northern_mariana_islands),
-            R.drawable.mp
+            R.drawable.mp,
+            context.getString(R.string.northern_mariana_hint)
         ),
         CountryDetails(
             "mq",
             "+596",
             context.getString(R.string.martinique),
-            R.drawable.mq
+            R.drawable.mq,
+            context.getString(R.string.martinique_hint)
         ),
         CountryDetails(
             "mr",
             "+222",
             context.getString(R.string.mauritania),
-            R.drawable.mr
+            R.drawable.mr,
+            context.getString(R.string.mauriatana_hint)
         ),
         CountryDetails(
             "ms",
             "+1",
             context.getString(R.string.montserrat),
-            R.drawable.ms
+            R.drawable.ms,
+            context.getString(R.string.montserrat_hint)
         ),
         CountryDetails(
             "mt",
             "+356",
             context.getString(R.string.malta),
-            R.drawable.mt
+            R.drawable.mt,
+            context.getString(R.string.malta_hint)
         ),
         CountryDetails(
             "mu",
             "+230",
             context.getString(R.string.mauritius),
-            R.drawable.mu
+            R.drawable.mu,
+            context.getString(R.string.mauritius_hint)
         ),
         CountryDetails(
             "mv",
             "+960",
             context.getString(R.string.maldives),
-            R.drawable.mv
+            R.drawable.mv,
+            context.getString(R.string.maldives_hint)
         ),
         CountryDetails(
             "mw",
             "+265",
             context.getString(R.string.malawi),
-            R.drawable.mw
+            R.drawable.mw,
+            context.getString(R.string.malawi_hint)
         ),
         CountryDetails(
             "mx",
             "+52",
             context.getString(R.string.mexico),
-            R.drawable.mx
+            R.drawable.mx,
+            context.getString(R.string.mexico_hint)
         ),
         CountryDetails(
             "my",
             "+60",
             context.getString(R.string.malaysia),
-            R.drawable.my
+            R.drawable.my,
+            context.getString(R.string.malaysia_hint)
         ),
         CountryDetails(
             "mz",
             "+258",
             context.getString(R.string.mozambique),
-            R.drawable.mz
+            R.drawable.mz,
+            context.getString(R.string.mozambique_hint)
         ),
         CountryDetails(
             "na",
             "+264",
             context.getString(R.string.namibia),
-            R.drawable.na
+            R.drawable.na,
+            context.getString(R.string.namibia_hint)
         ),
         CountryDetails(
             "nc",
             "+687",
             context.getString(R.string.new_caledonia),
-            R.drawable.nc
+            R.drawable.nc,
+            context.getString(R.string.new_caledonia_hint)
         ),
         CountryDetails(
             "ne",
             "+227",
             context.getString(R.string.niger),
-            R.drawable.ne
+            R.drawable.ne,
+            context.getString(R.string.niger_hint)
         ),
         CountryDetails(
             "nf",
             "+672",
             context.getString(R.string.norfolk_islands),
-            R.drawable.nf
+            R.drawable.nf,
+            context.getString(R.string.norfolk_hint)
         ),
         CountryDetails(
             "ng",
             "+234",
             context.getString(R.string.nigeria),
-            R.drawable.ng
-        ),
-        CountryDetails(
-            "ni",
-            "+505",
-            context.getString(R.string.nicaragua),
-            R.drawable.ni
+            R.drawable.ng,
+            context.getString(R.string.nigeria_hint)
         ),
         CountryDetails(
             "nl",
             "+31",
             context.getString(R.string.netherlands),
-            R.drawable.nl
+            R.drawable.nl,
+            context.getString(R.string.netherlands_hint)
         ),
         CountryDetails(
             "no",
             "+47",
             context.getString(R.string.norway),
-            R.drawable.no
+            R.drawable.no,
+            context.getString(R.string.norway_hint)
         ),
         CountryDetails(
             "np",
             "+977",
             context.getString(R.string.nepal),
-            R.drawable.np
+            R.drawable.np,
+            context.getString(R.string.nepal_hint)
         ),
         CountryDetails(
             "nr",
             "+674",
             context.getString(R.string.nauru),
-            R.drawable.nr
+            R.drawable.nr,
+            context.getString(R.string.nauru_hint)
         ),
         CountryDetails(
             "nu",
             "+683",
             context.getString(R.string.niue),
-            R.drawable.nu
+            R.drawable.nu,
+            context.getString(R.string.niue_hint)
         ),
         CountryDetails(
             "nz",
             "+64",
             context.getString(R.string.new_zealand),
-            R.drawable.nz
+            R.drawable.nz,
+            context.getString(R.string.new_zealand_hint)
         ),
         CountryDetails(
             "om",
             "+968",
             context.getString(R.string.oman),
-            R.drawable.om
+            R.drawable.om,
+            context.getString(R.string.oman_hint)
         ),
         CountryDetails(
             "pa",
             "+507",
             context.getString(R.string.panama),
-            R.drawable.pa
+            R.drawable.pa,
+            context.getString(R.string.panama_hint)
         ),
         CountryDetails(
             "pe",
             "+51",
             context.getString(R.string.peru),
-            R.drawable.pe
+            R.drawable.pe,
+            context.getString(R.string.peru_hint)
         ),
         CountryDetails(
             "pf",
             "+689",
             context.getString(R.string.french_polynesia),
-            R.drawable.pf
+            R.drawable.pf,
+            context.getString(R.string.french_polynesia_hint)
         ),
         CountryDetails(
             "pg",
             "+675",
             context.getString(R.string.papua_new_guinea),
-            R.drawable.pg
+            R.drawable.pg,
+            context.getString(R.string.papua_new_guinea_hint)
         ),
         CountryDetails(
             "ph",
             "+63",
             context.getString(R.string.philippines),
-            R.drawable.ph
+            R.drawable.ph,
+            context.getString(R.string.philippinies_hint)
         ),
         CountryDetails(
             "pk",
             "+92",
             context.getString(R.string.pakistan),
-            R.drawable.pk
+            R.drawable.pk,
+            context.getString(R.string.pakistan_hint)
         ),
         CountryDetails(
             "pl",
             "+48",
             context.getString(R.string.poland),
-            R.drawable.pl
+            R.drawable.pl,
+            context.getString(R.string.poland_hint)
         ),
         CountryDetails(
             "pm",
             "+508",
             context.getString(R.string.saint_pierre_and_miquelon),
-            R.drawable.pm
-        ),
-        CountryDetails(
-            "pn",
-            "+870",
-            context.getString(R.string.pitcairn_islands),
-            R.drawable.pn
+            R.drawable.pm,
+            context.getString(R.string.saint_pierre_hint)
         ),
         CountryDetails(
             "pr",
             "+1",
             context.getString(R.string.puerto_rico),
-            R.drawable.pr
-        ),
-        CountryDetails(
-            "ps",
-            "+970",
-            context.getString(R.string.palestine),
-            R.drawable.ps
+            R.drawable.pr,
+            context.getString(R.string.puerto_rico_hint)
         ),
         CountryDetails(
             "pt",
             "+351",
             context.getString(R.string.portugal),
-            R.drawable.pt
+            R.drawable.pt,
+            context.getString(R.string.portugal_hint)
         ),
         CountryDetails(
             "pw",
             "+680",
             context.getString(R.string.palau),
-            R.drawable.pw
+            R.drawable.pw,
+            context.getString(R.string.palau_hint)
         ),
         CountryDetails(
             "py",
             "+595",
             context.getString(R.string.paraguay),
-            R.drawable.py
+            R.drawable.py,
+            context.getString(R.string.paraguay_hint)
         ),
         CountryDetails(
             "qa",
             "+974",
             context.getString(R.string.qatar),
-            R.drawable.qa
+            R.drawable.qa,
+            context.getString(R.string.qatar_hint)
         ),
         CountryDetails(
             "re",
             "+262",
             context.getString(R.string.r_union),
-            R.drawable.re
+            R.drawable.re,
+            context.getString(R.string.reunion_hint)
         ),
         CountryDetails(
             "ro",
             "+40",
             context.getString(R.string.romania),
-            R.drawable.ro
+            R.drawable.ro,
+            context.getString(R.string.romania_hint)
         ),
         CountryDetails(
             "rs",
             "+381",
             context.getString(R.string.serbia),
-            R.drawable.rs
+            R.drawable.rs,
+            context.getString(R.string.serbia_hint)
         ),
         CountryDetails(
             "ru",
-            "+79",
+            "+7 9",
             context.getString(R.string.russian_federation),
-            R.drawable.ru
+            R.drawable.ru,
+            context.getString(R.string.russia_hint)
         ),
         CountryDetails(
             "rw",
             "+250",
             context.getString(R.string.rwanda),
-            R.drawable.rw
+            R.drawable.rw,
+            context.getString(R.string.rwanda_hint)
         ),
         CountryDetails(
             "sa",
             "+966",
             context.getString(R.string.saudi_arabia),
-            R.drawable.sa
+            R.drawable.sa,
+            context.getString(R.string.saudi_arabia_hint)
         ),
         CountryDetails(
             "sb",
             "+677",
             context.getString(R.string.solomon_islands),
-            R.drawable.sb
+            R.drawable.sb,
+            context.getString(R.string.solomon_islands_hint)
         ),
         CountryDetails(
             "sc",
             "+248",
             context.getString(R.string.seychelles),
-            R.drawable.sc
+            R.drawable.sc,
+            context.getString(R.string.seychelles_hint)
         ),
         CountryDetails(
             "sd",
             "+249",
             context.getString(R.string.sudan),
-            R.drawable.sd
+            R.drawable.sd,
+            context.getString(R.string.sudan_hint)
         ),
         CountryDetails(
             "se",
             "+46",
             context.getString(R.string.sweden),
-            R.drawable.se
+            R.drawable.se,
+            context.getString(R.string.sweden_hint)
         ),
         CountryDetails(
             "sg",
             "+65",
             context.getString(R.string.singapore),
-            R.drawable.sg
+            R.drawable.sg,
+            context.getString(R.string.singapore_hint)
         ),
         CountryDetails(
             "sh",
             "+290",
             context.getString(R.string.saint_helena_ascension_and_tristan_da_cunha),
-            R.drawable.sh
+            R.drawable.sh,
+            context.getString(R.string.saint_helena_hint)
         ),
         CountryDetails(
             "si",
             "+386",
             context.getString(R.string.slovenia),
-            R.drawable.si
+            R.drawable.si,
+            context.getString(R.string.slovenia_hint)
         ),
         CountryDetails(
             "sk",
             "+421",
             context.getString(R.string.slovakia),
-            R.drawable.sk
+            R.drawable.sk,
+            context.getString(R.string.slovakia_hint)
         ),
         CountryDetails(
             "sl",
             "+232",
             context.getString(R.string.sierra_leone),
-            R.drawable.sl
+            R.drawable.sl,
+            context.getString(R.string.sierra_leone_hint)
         ),
         CountryDetails(
             "sm",
             "+378",
             context.getString(R.string.san_marino),
-            R.drawable.sm
+            R.drawable.sm,
+            context.getString(R.string.san_marino_hint)
         ),
         CountryDetails(
             "sn",
             "+221",
             context.getString(R.string.senegal),
-            R.drawable.sn
-        ),
-        CountryDetails(
-            "so",
-            "+252",
-            context.getString(R.string.somalia),
-            R.drawable.so
+            R.drawable.sn,
+            context.getString(R.string.senegal_hint)
         ),
         CountryDetails(
             "sr",
             "+597",
             context.getString(R.string.suriname),
-            R.drawable.sr
+            R.drawable.sr,
+            context.getString(R.string.suriname_hint)
         ),
         CountryDetails(
             "ss",
             "+211",
             context.getString(R.string.south_sudan),
-            R.drawable.ss
+            R.drawable.ss,
+            context.getString(R.string.south_sudan_hint)
         ),
         CountryDetails(
             "st",
             "+239",
             context.getString(R.string.sao_tome_and_principe),
-            R.drawable.st
+            R.drawable.st,
+            context.getString(R.string.sao_tome_hint)
         ),
         CountryDetails(
             "sv",
             "+503",
             context.getString(R.string.el_salvador),
-            R.drawable.sv
+            R.drawable.sv,
+            context.getString(R.string.el_salvador_hint)
         ),
         CountryDetails(
             "sx",
             "+1",
             context.getString(R.string.sint_maarten),
-            R.drawable.sx
+            R.drawable.sx,
+            context.getString(R.string.sint_maarten_hint)
         ),
         CountryDetails(
             "sy",
             "+963",
             context.getString(R.string.syrian_arab_republic),
-            R.drawable.sy
+            R.drawable.sy,
+            context.getString(R.string.syrian_hint)
         ),
         CountryDetails(
             "sz",
             "+268",
             context.getString(R.string.swaziland),
-            R.drawable.sz
+            R.drawable.sz,
+            context.getString(R.string.switzerland_hint)
         ),
         CountryDetails(
             "tc",
             "+1",
             context.getString(R.string.turks_and_caicos_islands),
-            R.drawable.tc
+            R.drawable.tc,
+            context.getString(R.string.turks_and_caicos_hint)
         ),
         CountryDetails(
             "td",
             "+235",
             context.getString(R.string.chad),
-            R.drawable.td
+            R.drawable.td,
+            context.getString(R.string.chad_hint)
         ),
         CountryDetails(
             "tg",
             "+228",
             context.getString(R.string.togo),
-            R.drawable.tg
+            R.drawable.tg,
+            context.getString(R.string.togo_hint)
         ),
         CountryDetails(
             "th",
             "+66",
             context.getString(R.string.thailand),
-            R.drawable.th
+            R.drawable.th,
+            context.getString(R.string.thailand_hint)
         ),
         CountryDetails(
             "tj",
             "+992",
             context.getString(R.string.tajikistan),
-            R.drawable.tj
+            R.drawable.tj,
+            context.getString(R.string.taijikistan_hint)
         ),
         CountryDetails(
             "tk",
             "+690",
             context.getString(R.string.tokelau),
-            R.drawable.tk
+            R.drawable.tk,
+            context.getString(R.string.tokelau_hint)
         ),
         CountryDetails(
             "tl",
             "+670",
             context.getString(R.string.timor_leste),
-            R.drawable.tl
+            R.drawable.tl,
+            context.getString(R.string.timor_leste_hint)
         ),
         CountryDetails(
             "tm",
             "+993",
             context.getString(R.string.turkmenistan),
-            R.drawable.tm
+            R.drawable.tm,
+            context.getString(R.string.turkmenistan_hint)
         ),
         CountryDetails(
             "tn",
             "+216",
             context.getString(R.string.tunisia),
-            R.drawable.tn
+            R.drawable.tn,
+            context.getString(R.string.tunisia_hint)
         ),
         CountryDetails(
             "to",
             "+676",
             context.getString(R.string.tonga),
-            R.drawable.to
+            R.drawable.to,
+            context.getString(R.string.tonga_hint)
         ),
         CountryDetails(
             "tr",
             "+90",
             context.getString(R.string.turkey),
-            R.drawable.tr
+            R.drawable.tr,
+            context.getString(R.string.turkey_hint)
         ),
         CountryDetails(
             "tt",
             "+1",
             context.getString(R.string.trinidad_amp_tobago),
-            R.drawable.tt
+            R.drawable.tt,
+            context.getString(R.string.trinidad_and_tobago_hint)
         ),
         CountryDetails(
             "tv",
             "+688",
             context.getString(R.string.tuvalu),
-            R.drawable.tv
+            R.drawable.tv,
+            context.getString(R.string.tuvalu_hint)
         ),
         CountryDetails(
             "tw",
             "+886",
             context.getString(R.string.taiwan),
-            R.drawable.tw
+            R.drawable.tw,
+            context.getString(R.string.taiwan_hint)
         ),
         CountryDetails(
             "tz",
             "+255",
             context.getString(R.string.tanzania_united_republic_of),
-            R.drawable.tz
+            R.drawable.tz,
+            context.getString(R.string.tanzania_united_republic_of)
         ),
         CountryDetails(
             "ua",
             "+380",
             context.getString(R.string.ukraine),
-            R.drawable.ua
+            R.drawable.ua,
+            context.getString(R.string.ukraina_hint)
         ),
         CountryDetails(
             "ug",
             "+256",
             context.getString(R.string.uganda),
-            R.drawable.ug
+            R.drawable.ug,
+            context.getString(R.string.uganda_hint)
         ),
         CountryDetails(
             "us",
             "+1",
             context.getString(R.string.united_states),
-            R.drawable.us
+            R.drawable.us,
+            context.getString(R.string.united_states_america_hint)
         ),
         CountryDetails(
             "uy",
             "+598",
             context.getString(R.string.uruguay),
-            R.drawable.uy
+            R.drawable.uy,
+            context.getString(R.string.uruguay_hint)
         ),
         CountryDetails(
             "uz",
             "+998",
             context.getString(R.string.uzbekistan),
-            R.drawable.uz
-        ),
-        CountryDetails(
-            "va",
-            "+379",
-            context.getString(R.string.holy_see_vatican_city_state),
-            R.drawable.va
+            R.drawable.uz,
+            context.getString(R.string.uzbekistan_hint)
         ),
         CountryDetails(
             "vc",
             "+1",
             context.getString(R.string.saint_vincent_amp_the_grenadines),
-            R.drawable.vc
+            R.drawable.vc,
+            context.getString(R.string.saint_vincent_hint)
         ),
         CountryDetails(
             "ve",
             "+58",
             context.getString(R.string.venezuela_bolivarian_republic_of),
-            R.drawable.ve
-        ),
-        CountryDetails(
-            "vg",
-            "+1",
-            context.getString(R.string.british_virgin_islands),
-            R.drawable.vg
-        ),
-        CountryDetails(
-            "vi",
-            "+1",
-            context.getString(R.string.us_virgin_islands),
-            R.drawable.vi
+            R.drawable.ve,
+            context.getString(R.string.venezuela_hint)
         ),
         CountryDetails(
             "vn",
             "+84",
             context.getString(R.string.vietnam),
-            R.drawable.vn
+            R.drawable.vn,
+            context.getString(R.string.vietnam_hint)
         ),
         CountryDetails(
             "vu",
             "+678",
             context.getString(R.string.vanuatu),
-            R.drawable.vu
+            R.drawable.va,
+            context.getString(R.string.vanuatu_hint)
         ),
         CountryDetails(
             "wf",
             "+681",
             context.getString(R.string.wallis_and_futuna),
-            R.drawable.wf
+            R.drawable.wf,
+            context.getString(R.string.walli_and_fatuna_hint)
         ),
         CountryDetails(
             "ws",
             "4685",
             context.getString(R.string.samoa),
-            R.drawable.ws
+            R.drawable.ws,
+            context.getString(R.string.samoa_hint)
         ),
         CountryDetails(
             "xk",
             "+383",
             context.getString(R.string.kosovo),
-            R.drawable.xk
+            R.drawable.xk,
+            context.getString(R.string.kosovo_hint)
         ),
         CountryDetails(
             "ye",
             "+967",
             context.getString(R.string.yemen),
-            R.drawable.ye
+            R.drawable.ye,
+            context.getString(R.string.yemen_hint)
         ),
         CountryDetails(
             "yt",
             "+262",
             context.getString(R.string.mayotte),
-            R.drawable.yt
+            R.drawable.yt,
+            context.getString(R.string.mayotte_hint)
         ),
         CountryDetails(
             "za",
             "+27",
             context.getString(R.string.south_africa),
-            R.drawable.za
+            R.drawable.za,
+            context.getString(R.string.south_africa_hint)
         ),
         CountryDetails(
             "zm",
             "+260",
             context.getString(R.string.zambia),
-            R.drawable.zm
+            R.drawable.zm,
+            context.getString(R.string.zambia_hint)
         ),
         CountryDetails(
             "zw",
             "+263",
             context.getString(R.string.zimbabwe),
-            R.drawable.zw
+            R.drawable.zw,
+            context.getString(R.string.zimbabwe_hint)
         ),
     ).sortedBy { it.countryName }
 }

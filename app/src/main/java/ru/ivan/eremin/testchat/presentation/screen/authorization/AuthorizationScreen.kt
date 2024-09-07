@@ -2,7 +2,6 @@
 
 package ru.ivan.eremin.testchat.presentation.screen.authorization
 
-
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -46,8 +45,11 @@ import ru.ivan.eremin.testchat.presentation.components.Screen
 import ru.ivan.eremin.testchat.presentation.components.phone.CountryPickerOutlinedTextField
 import ru.ivan.eremin.testchat.presentation.components.phone.data.CountryDetails
 import ru.ivan.eremin.testchat.presentation.components.phone.utils.CountryPickerUtils
+import ru.ivan.eremin.testchat.presentation.components.phone.utils.FunctionHelper.getLengthPhone
+import ru.ivan.eremin.testchat.presentation.components.phone.utils.FunctionHelper.getMask
 import ru.ivan.eremin.testchat.presentation.navigate.ChatsRoute
 import ru.ivan.eremin.testchat.presentation.navigate.RegistrationRoute
+import ru.ivan.eremin.testchat.presentation.utils.textfield.MaskVisualTransformation
 
 @Composable
 fun AuthorizationScreen(
@@ -104,11 +106,12 @@ private fun AuthorizationScreenState(
         val visualPhone by remember(state.phone) {
             mutableStateOf(
                 TextFieldValue(
-                    text = state.phone.orEmpty(),
+                    text = state.phone.orEmpty().filter { it.isDigit() },
                     selection = TextRange(state.phone.orEmpty().length)
                 )
             )
         }
+
         val context = LocalContext.current
         Column(
             Modifier
@@ -122,20 +125,51 @@ private fun AuthorizationScreenState(
                 modifier = Modifier.fillMaxWidth(),
                 mobileNumber = visualPhone,
                 country = selectedCountryState.value,
+                isError = state.errorPhone != null,
                 onMobileNumberChange = {
-                    CountryPickerUtils.searchCountryByNumber(
+                    val countryDetails = CountryPickerUtils.searchCountryByNumber(
                         context,
                         it.text
-                    )?.let {
-                        selectedCountryState.value = it
+                    )
+                    if (countryDetails != null) {
+                        selectedCountryState.value = countryDetails
                     }
-                    onAction(Action.ChangePhone(it.text))
+                    val lengthMask = countryDetails?.getLengthPhone()
+                    if (it.text.length <= (lengthMask ?: 0) || lengthMask == null) {
+                        onAction(
+                            Action.ChangePhone(
+                                it.text,
+                                countryDetails?.countryPhoneNumberCode.orEmpty(),
+                                lengthMask
+                            )
+                        )
+                    }
+                },
+                supportingText = {
+                    if (state.errorPhone != null) {
+                        Text(
+                            text = state.errorPhone.getErrorText(),
+                            color = MaterialTheme.colorScheme.error,
+                            style = MaterialTheme.typography.labelSmall
+                        )
+                    }
                 },
                 onCountrySelected = {
                     if (selectedCountryState.value != it || selectedCountryState.value == null) {
                         selectedCountryState.value = it
                     }
-                    onAction(Action.ChangePhone(it.countryPhoneNumberCode))
+                    onAction(
+                        Action.ChangePhone(
+                            it.countryPhoneNumberCode,
+                            it.countryPhoneNumberCode,
+                            it.getLengthPhone()
+                        )
+                    )
+                },
+                visualTransformation = selectedCountryState.value?.getMask().orEmpty().let {
+                    MaskVisualTransformation(
+                        mask = it
+                    )
                 },
                 defaultCountryCode = selectedCountryState.value?.countryCode
             )
@@ -148,7 +182,6 @@ private fun AuthorizationScreenState(
                         onAction(Action.ChangeCode(it))
                     },
                     isError = state.codeError != null,
-                    errorText = state.codeError?.getErrorText(),
                 )
             }
 
@@ -159,7 +192,7 @@ private fun AuthorizationScreenState(
                         if (state.isSuccessSendPhone) {
                             Action.Authorization(state.phone.orEmpty(), state.code.orEmpty())
                         } else {
-                            Action.SendPhone(state.phone.orEmpty())
+                            Action.SendPhone
                         }
                     )
                 },
@@ -197,7 +230,12 @@ private fun eventHandler(event: AuthorizationEvent, navHostController: NavHostCo
                     params(navHostController)
                 }
             }
+        }
 
+        is AuthorizationEvent.OpenRegistration -> {
+            navHostController.navigate("${RegistrationRoute.route}?phone=${event.phone}") {
+                params(navHostController)
+            }
         }
     }
 }
@@ -211,17 +249,24 @@ private fun NavOptionsBuilder.params(navHostController: NavHostController) {
 private fun actionHandler(action: Action, viewModel: AuthorizationViewModel) {
     when (action) {
         is Action.Authorization -> viewModel.checkCode(action.phone, action.code)
-        is Action.SendPhone -> viewModel.sendPhone(action.phone)
+        is Action.SendPhone -> viewModel.sendPhone()
         is Action.ChangeCurrentZip -> viewModel.setZip(action.zip)
-        is Action.ChangePhone -> viewModel.changePhone(action.phone)
+        is Action.ChangePhone -> viewModel.changePhone(
+            action.phone,
+            action.lengthPhone,
+            action.countryPhoneCode
+        )
+
         is Action.ChangeCode -> viewModel.changeCode(action.code)
     }
 }
 
 private sealed interface Action {
     data class Authorization(val phone: String, val code: String) : Action
-    data class SendPhone(val phone: String) : Action
-    data class ChangePhone(val phone: String) : Action
+    data object SendPhone : Action
+    data class ChangePhone(val phone: String, val countryPhoneCode: String, val lengthPhone: Int?) :
+        Action
+
     data class ChangeCode(val code: String) : Action
     data class ChangeCurrentZip(val zip: String) : Action
 }

@@ -6,5 +6,6 @@ data class CountryDetails(
     var countryCode: String,
     val countryPhoneNumberCode: String,
     val countryName: String,
-    @DrawableRes val countryFlag: Int
+    @DrawableRes val countryFlag: Int,
+    val mask: String
 )

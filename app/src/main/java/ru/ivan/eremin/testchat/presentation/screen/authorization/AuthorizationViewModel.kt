@@ -20,25 +20,31 @@ class AuthorizationViewModel @Inject constructor(
         return AuthorizationUiState()
     }
 
-    fun sendPhone(phone: String) {
-        viewModelScope.launch {
-            updateState {
-                copy(
-                    isSuccessSendPhone = true
-                )
-            }
-            try {
-                val isSuccess = sendPhoneUseCase(phone)
-                updateState {
-                    copy(
-                        isSuccessSendPhone = isSuccess
-                    )
-                }
-            } catch (e: Exception) {
-                updateState {
-                    copy(
-                        error = e.uiErrorHandle()
-                    )
+    fun sendPhone() {
+        state.value.phone?.let { phone ->
+            viewModelScope.launch {
+                try {
+                    val filtredPhone = phone.filter { it.isDigit() }
+                    val isSuccess = sendPhoneUseCase(filtredPhone)
+                    if (isSuccess) {
+                        updateState {
+                            copy(
+                                isSuccessSendPhone = true,
+                            )
+                        }
+                    } else {
+                        updateState {
+                            copy(
+                                events = events + AuthorizationEvent.OpenRegistration(phone)
+                            )
+                        }
+                    }
+                } catch (e: Exception) {
+                    updateState {
+                        copy(
+                            events = events + AuthorizationEvent.OpenRegistration(phone)
+                        )
+                    }
                 }
             }
         }
@@ -76,11 +82,11 @@ class AuthorizationViewModel @Inject constructor(
         }
     }
 
-    fun changePhone(phone: String) {
+    fun changePhone(phone: String, lengthPhone: Int?, countryPhoneCode: String) {
         updateState {
             copy(
                 phone = phone,
-                errorPhone = phone.isPhone()
+                errorPhone = phone.isPhone(lengthPhone, countryPhoneCode)
             )
         }
     }
