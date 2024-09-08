@@ -13,7 +13,7 @@ private const val REGEX_NOT_NUM = "\\D+"
 
 fun String.isPhone(minLengthPhone: Int?, countryPhoneCode: String): PhoneValidationError? {
     return when {
-        this == countryPhoneCode -> null
+        this == countryPhoneCode || minLengthPhone == 0 || countryPhoneCode.isBlank() -> null
 
         isEmpty() || replace(
             REGEX_NOT_NUM.toRegex(),

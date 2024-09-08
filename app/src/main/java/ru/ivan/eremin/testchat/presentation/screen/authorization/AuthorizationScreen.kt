@@ -8,11 +8,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -40,7 +41,6 @@ import androidx.navigation.NavOptionsBuilder
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.filterNotNull
 import ru.ivan.eremin.testchat.R
-import ru.ivan.eremin.testchat.presentation.components.CodeTextField
 import ru.ivan.eremin.testchat.presentation.components.Screen
 import ru.ivan.eremin.testchat.presentation.components.phone.CountryPickerOutlinedTextField
 import ru.ivan.eremin.testchat.presentation.components.phone.data.CountryDetails
@@ -116,7 +116,6 @@ private fun AuthorizationScreenState(
         Column(
             Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
                 .padding(16.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
@@ -145,14 +144,16 @@ private fun AuthorizationScreenState(
                         )
                     }
                 },
-                supportingText = {
-                    if (state.errorPhone != null) {
+                supportingText = if (state.errorPhone != null) {
+                    {
                         Text(
                             text = state.errorPhone.getErrorText(),
                             color = MaterialTheme.colorScheme.error,
                             style = MaterialTheme.typography.labelSmall
                         )
                     }
+                } else {
+                    null
                 },
                 onCountrySelected = {
                     if (selectedCountryState.value != it || selectedCountryState.value == null) {
@@ -175,18 +176,35 @@ private fun AuthorizationScreenState(
             )
 
             if (state.isSuccessSendPhone) {
-                CodeTextField(
-                    modifier = Modifier.fillMaxWidth(),
+                OutlinedTextField(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 16.dp),
                     value = state.code.orEmpty(),
-                    onValueChange = {
-                        onAction(Action.ChangeCode(it))
-                    },
+                    onValueChange = { onAction(Action.ChangeCode(it)) },
                     isError = state.codeError != null,
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Number
+                    ),
+                    supportingText = if (state.codeError != null) {
+                        {
+                            Text(
+                                text = state.codeError.getErrorText(),
+                                color = MaterialTheme.colorScheme.error,
+                                style = MaterialTheme.typography.labelSmall
+                            )
+                        }
+                    } else {
+                        null
+                    },
                 )
             }
 
             Button(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp),
                 onClick = {
                     onAction(
                         if (state.isSuccessSendPhone) {

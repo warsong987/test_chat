@@ -493,4 +493,5 @@
     <string name="jamaica_hint" translatable="false">(876) 123-4567</string>
     <string name="iraq_hint" translatable="false">0777 123 4567</string>
     <string name="slovenia_hint" translatable="false">070 123 456</string>
+    <string name="code_with_sms">Код из смс</string>
 </resources>
