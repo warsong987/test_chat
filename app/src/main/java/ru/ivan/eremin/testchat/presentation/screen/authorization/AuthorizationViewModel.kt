@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import ru.ivan.eremin.testchat.domain.authorization.usecase.authorization.CheckAuthCodeUseCase
-import ru.ivan.eremin.testchat.domain.authorization.usecase.authorization.SendPhoneForGetSmsCodeUseCase
+import ru.ivan.eremin.testchat.domain.authorization.usecase.authorization.SendAuthCodeUseCase
 import ru.ivan.eremin.testchat.presentation.core.BaseViewModel
 import ru.ivan.eremin.testchat.presentation.core.ErrorHandler.uiErrorHandle
 import ru.ivan.eremin.testchat.presentation.utils.validator.isPhone
@@ -13,27 +13,38 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AuthorizationViewModel @Inject constructor(
-    private val sendPhoneForGetSmsCodeUseCase: SendPhoneForGetSmsCodeUseCase,
+    private val sendPhoneUseCase: SendAuthCodeUseCase,
     private val checkAuthCodeUseCase: CheckAuthCodeUseCase
 ) : BaseViewModel<AuthorizationUiState>() {
     override fun createInitialState(): AuthorizationUiState {
         return AuthorizationUiState()
     }
 
-    fun sendPhone(phone: String) {
-        viewModelScope.launch {
-            try {
-                val isSuccess = sendPhoneForGetSmsCodeUseCase(phone)
-                updateState {
-                    copy(
-                        isSuccessSendPhone = isSuccess
-                    )
-                }
-            } catch (e: Exception) {
-                updateState {
-                    copy(
-                        error = e.uiErrorHandle()
-                    )
+    fun sendPhone() {
+        state.value.phone?.let { phone ->
+            viewModelScope.launch {
+                try {
+                    val filtredPhone = phone.filter { it.isDigit() }
+                    val isSuccess = sendPhoneUseCase(filtredPhone)
+                    if (isSuccess) {
+                        updateState {
+                            copy(
+                                isSuccessSendPhone = true,
+                            )
+                        }
+                    } else {
+                        updateState {
+                            copy(
+                                events = events + AuthorizationEvent.OpenRegistration(phone)
+                            )
+                        }
+                    }
+                } catch (e: Exception) {
+                    updateState {
+                        copy(
+                            events = events + AuthorizationEvent.OpenRegistration(phone)
+                        )
+                    }
                 }
             }
         }
@@ -41,11 +52,16 @@ class AuthorizationViewModel @Inject constructor(
 
     fun checkCode(phone: String, code: String) {
         viewModelScope.launch {
+            updateState {
+                copy(
+                    events = events + AuthorizationEvent.Authorization(true, code)
+                )
+            }
             try {
                 val userIsExist = checkAuthCodeUseCase(phone, code)
                 updateState {
                     copy(
-                        events = events + AuthorizationEvent.RegistrationIsSuccess(userIsExist, phone)
+                        events = events + AuthorizationEvent.Authorization(userIsExist, phone)
                     )
                 }
             } catch (e: Exception) {
@@ -66,11 +82,11 @@ class AuthorizationViewModel @Inject constructor(
         }
     }
 
-    fun changePhone(phone: String) {
+    fun changePhone(phone: String, lengthPhone: Int?, countryPhoneCode: String) {
         updateState {
             copy(
                 phone = phone,
-                errorPhone = phone.isPhone(count)
+                errorPhone = phone.isPhone(lengthPhone, countryPhoneCode)
             )
         }
     }
@@ -80,18 +96,6 @@ class AuthorizationViewModel @Inject constructor(
             copy(
                 code = code,
                 codeError = code.isSmsCode()
-            )
-        }
-    }
-
-    private var count = 0
-
-    fun changeCount(count: Int) {
-        this.count = count
-        updateState {
-            copy(
-                phone = phone,
-                errorPhone = phone?.isPhone(count)
             )
         }
     }

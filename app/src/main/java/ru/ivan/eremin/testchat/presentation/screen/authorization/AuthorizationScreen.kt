@@ -2,41 +2,54 @@
 
 package ru.ivan.eremin.testchat.presentation.screen.authorization
 
-
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptionsBuilder
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.filterNotNull
 import ru.ivan.eremin.testchat.R
-import ru.ivan.eremin.testchat.presentation.components.CodeTextField
 import ru.ivan.eremin.testchat.presentation.components.Screen
-import ru.ivan.eremin.testchat.presentation.components.phone.component.CountryCodePicker
-import ru.ivan.eremin.testchat.presentation.navigate.Chats
-import ru.ivan.eremin.testchat.presentation.navigate.Registration
-import ru.ivan.eremin.testchat.presentation.navigate.newRootScreen
+import ru.ivan.eremin.testchat.presentation.components.phone.CountryPickerOutlinedTextField
+import ru.ivan.eremin.testchat.presentation.components.phone.data.CountryDetails
+import ru.ivan.eremin.testchat.presentation.components.phone.utils.CountryPickerUtils
+import ru.ivan.eremin.testchat.presentation.components.phone.utils.FunctionHelper.getLengthPhone
+import ru.ivan.eremin.testchat.presentation.components.phone.utils.FunctionHelper.getMask
+import ru.ivan.eremin.testchat.presentation.navigate.ChatsRoute
+import ru.ivan.eremin.testchat.presentation.navigate.RegistrationRoute
+import ru.ivan.eremin.testchat.presentation.utils.textfield.MaskVisualTransformation
 
 @Composable
 fun AuthorizationScreen(
@@ -67,7 +80,7 @@ fun AuthorizationScreen(
     )
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalFoundationApi::class)
 @Composable
 private fun AuthorizationScreenState(
     state: AuthorizationUiState,
@@ -75,11 +88,31 @@ private fun AuthorizationScreenState(
 ) {
     Screen(
         topBar = {
-            TopAppBar(title = { Text(text = stringResource(id = R.string.authorization)) })
+            TopAppBar(
+                title = {
+                    Text(
+                        text = stringResource(id = R.string.authorization)
+                    )
+                }
+            )
         },
         modifier = Modifier.fillMaxSize(),
         uiError = state.error
     ) {
+        val selectedCountryState: MutableState<CountryDetails?> = remember {
+            mutableStateOf(null)
+        }
+
+        val visualPhone by remember(state.phone) {
+            mutableStateOf(
+                TextFieldValue(
+                    text = state.phone.orEmpty().filter { it.isDigit() },
+                    selection = TextRange(state.phone.orEmpty().length)
+                )
+            )
+        }
+
+        val context = LocalContext.current
         Column(
             Modifier
                 .fillMaxSize()
@@ -87,39 +120,97 @@ private fun AuthorizationScreenState(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            CountryCodePicker(
+            CountryPickerOutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
-                text = state.phone.orEmpty(),
-                onValueChange = { phone, count ->
-                    onAction(Action.ChangePhone(phone, count))
-                },
+                mobileNumber = visualPhone,
+                country = selectedCountryState.value,
                 isError = state.errorPhone != null,
-                error = state.errorPhone?.getErrorText(),
-                onCountChange = {
-                    onAction(Action.OnChangeCount(it))
-                }
+                onMobileNumberChange = {
+                    val countryDetails = CountryPickerUtils.searchCountryByNumber(
+                        context,
+                        it.text
+                    )
+                    if (countryDetails != null) {
+                        selectedCountryState.value = countryDetails
+                    }
+                    val lengthMask = countryDetails?.getLengthPhone()
+                    if (it.text.length <= (lengthMask ?: 0) || lengthMask == null) {
+                        onAction(
+                            Action.ChangePhone(
+                                it.text,
+                                countryDetails?.countryPhoneNumberCode.orEmpty(),
+                                lengthMask
+                            )
+                        )
+                    }
+                },
+                supportingText = if (state.errorPhone != null) {
+                    {
+                        Text(
+                            text = state.errorPhone.getErrorText(),
+                            color = MaterialTheme.colorScheme.error,
+                            style = MaterialTheme.typography.labelSmall
+                        )
+                    }
+                } else {
+                    null
+                },
+                onCountrySelected = {
+                    if (selectedCountryState.value != it || selectedCountryState.value == null) {
+                        selectedCountryState.value = it
+                    }
+                    onAction(
+                        Action.ChangePhone(
+                            it.countryPhoneNumberCode,
+                            it.countryPhoneNumberCode,
+                            it.getLengthPhone()
+                        )
+                    )
+                },
+                visualTransformation = selectedCountryState.value?.getMask().orEmpty().let {
+                    MaskVisualTransformation(
+                        mask = it
+                    )
+                },
+                defaultCountryCode = selectedCountryState.value?.countryCode
             )
 
             if (state.isSuccessSendPhone) {
-                CodeTextField(
-                    modifier = Modifier.fillMaxWidth(),
+                OutlinedTextField(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 16.dp),
                     value = state.code.orEmpty(),
-                    onValueChange = {
-                        onAction(Action.ChangeCode(it))
-                    },
+                    onValueChange = { onAction(Action.ChangeCode(it)) },
                     isError = state.codeError != null,
-                    errorText = state.codeError?.getErrorText(),
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Number
+                    ),
+                    supportingText = if (state.codeError != null) {
+                        {
+                            Text(
+                                text = state.codeError.getErrorText(),
+                                color = MaterialTheme.colorScheme.error,
+                                style = MaterialTheme.typography.labelSmall
+                            )
+                        }
+                    } else {
+                        null
+                    },
                 )
             }
 
             Button(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp),
                 onClick = {
                     onAction(
                         if (state.isSuccessSendPhone) {
-                            Action.SendPhone(state.phone.orEmpty())
-                        } else {
                             Action.Authorization(state.phone.orEmpty(), state.code.orEmpty())
+                        } else {
+                            Action.SendPhone
                         }
                     )
                 },
@@ -129,7 +220,7 @@ private fun AuthorizationScreenState(
                     state.isActionSendPhone
                 }
             ) {
-                Text(text = getActionText(isSuccessSendPhone = state.isActionSendPhone))
+                Text(text = getActionText(isSuccessSendPhone = state.isSuccessSendPhone))
             }
         }
     }
@@ -147,34 +238,53 @@ private fun getActionText(isSuccessSendPhone: Boolean): String {
 
 private fun eventHandler(event: AuthorizationEvent, navHostController: NavHostController) {
     when (event) {
-        is AuthorizationEvent.RegistrationIsSuccess -> {
-            navHostController.newRootScreen(
-                if (event.userIsExist) {
-                    Chats
-                } else {
-                    Registration(phone = event.phone)
+        is AuthorizationEvent.Authorization -> {
+            if (event.userIsExist) {
+                navHostController.navigate(ChatsRoute.route) {
+                    params(navHostController)
                 }
-            )
+            } else {
+                navHostController.navigate("${RegistrationRoute.route}?phone=${event.phone}") {
+                    params(navHostController)
+                }
+            }
         }
+
+        is AuthorizationEvent.OpenRegistration -> {
+            navHostController.navigate("${RegistrationRoute.route}?phone=${event.phone}") {
+                params(navHostController)
+            }
+        }
+    }
+}
+
+private fun NavOptionsBuilder.params(navHostController: NavHostController) {
+    popUpTo(navHostController.graph.findStartDestination().id) {
+        inclusive = true
     }
 }
 
 private fun actionHandler(action: Action, viewModel: AuthorizationViewModel) {
     when (action) {
         is Action.Authorization -> viewModel.checkCode(action.phone, action.code)
-        is Action.SendPhone -> viewModel.sendPhone(action.phone)
+        is Action.SendPhone -> viewModel.sendPhone()
         is Action.ChangeCurrentZip -> viewModel.setZip(action.zip)
-        is Action.ChangePhone -> viewModel.changePhone(action.phone)
+        is Action.ChangePhone -> viewModel.changePhone(
+            action.phone,
+            action.lengthPhone,
+            action.countryPhoneCode
+        )
+
         is Action.ChangeCode -> viewModel.changeCode(action.code)
-        is Action.OnChangeCount -> viewModel.changeCount(action.count)
     }
 }
 
 private sealed interface Action {
     data class Authorization(val phone: String, val code: String) : Action
-    data class SendPhone(val phone: String) : Action
-    data class ChangePhone(val phone: String, val count: Int) : Action
-    data class OnChangeCount(val count: Int) : Action
+    data object SendPhone : Action
+    data class ChangePhone(val phone: String, val countryPhoneCode: String, val lengthPhone: Int?) :
+        Action
+
     data class ChangeCode(val code: String) : Action
     data class ChangeCurrentZip(val zip: String) : Action
 }

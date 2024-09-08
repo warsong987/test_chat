@@ -1,6 +1,7 @@
 package ru.ivan.eremin.testchat.database.dao
 
 import androidx.room.Dao
+import androidx.room.Insert
 import androidx.room.Query
 import ru.ivan.eremin.testchat.database.entity.AuthDb
 
@@ -14,4 +15,7 @@ interface AuthDao {
 
     @Query("DELETE FROM AuthDb WHERE userId=:userId")
     suspend fun delete(userId: Long)
+
+    @Insert
+    suspend fun insert(authDb: AuthDb)
 }

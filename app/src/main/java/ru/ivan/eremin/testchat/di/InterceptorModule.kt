@@ -11,6 +11,7 @@ import ru.ivan.eremin.testchat.di.qualifier.interceptor.AppInterceptor
 import ru.ivan.eremin.testchat.di.qualifier.interceptor.NetworkInterceptor
 import ru.ivan.eremin.testchat.network.interceptor.DeviceInfoInterceptor
 import ru.ivan.eremin.testchat.network.interceptor.RetryInterceptor
+import ru.ivan.eremin.testchat.network.interceptor.ServiceValidateInterceptor
 import ru.ivan.eremin.testchat.network.interceptor.TimeoutInterceptor
 
 @Module
@@ -38,4 +39,9 @@ internal interface InterceptorModule {
     @Binds
     @IntoSet
     fun retryInterceptor(interceptor: RetryInterceptor): Interceptor
+
+    @NetworkInterceptor
+    @Binds
+    @IntoSet
+    fun validationInterceptor(interceptor: ServiceValidateInterceptor): Interceptor
 }
