@@ -25,7 +25,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -80,7 +79,7 @@ fun AuthorizationScreen(
     )
 }
 
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun AuthorizationScreenState(
     state: AuthorizationUiState,
@@ -125,6 +124,18 @@ private fun AuthorizationScreenState(
                 mobileNumber = visualPhone,
                 country = selectedCountryState.value,
                 isError = state.errorPhone != null,
+                label = {
+                    Text(
+                        text = stringResource(R.string.phone),
+                        color = MaterialTheme.colorScheme.secondary
+                    )
+                },
+                placeholder = {
+                    Text(
+                        text = stringResource(R.string.phone),
+                        color = MaterialTheme.colorScheme.surfaceDim
+                    )
+                },
                 onMobileNumberChange = {
                     val countryDetails = CountryPickerUtils.searchCountryByNumber(
                         context,
@@ -179,11 +190,23 @@ private fun AuthorizationScreenState(
                 OutlinedTextField(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 16.dp),
+                        .padding(top = 8.dp),
                     value = state.code.orEmpty(),
                     onValueChange = { onAction(Action.ChangeCode(it)) },
                     isError = state.codeError != null,
                     singleLine = true,
+                    label =  {
+                        Text(
+                            text = stringResource(R.string.code_with_sms),
+                            color = MaterialTheme.colorScheme.secondary
+                        )
+                    },
+                    placeholder = {
+                        Text(
+                            text = stringResource(R.string.code_with_sms),
+                            color = MaterialTheme.colorScheme.surfaceDim
+                        )
+                    },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Number
                     ),
@@ -204,7 +227,7 @@ private fun AuthorizationScreenState(
             Button(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 16.dp),
+                    .padding(top = 8.dp),
                 onClick = {
                     onAction(
                         if (state.isSuccessSendPhone) {

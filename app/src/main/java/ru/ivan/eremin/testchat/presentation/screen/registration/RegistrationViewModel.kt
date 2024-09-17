@@ -31,6 +31,22 @@ class RegistrationViewModel @Inject constructor(
         }
     }
 
+    fun changeName(name: String) {
+        updateState {
+            copy(
+                name = name
+            )
+        }
+    }
+
+    fun changeUserName(userName: String) {
+        updateState {
+            copy(
+                username = userName
+            )
+        }
+    }
+
     fun registration(phone: String, name: String, userName: String) {
 
     }

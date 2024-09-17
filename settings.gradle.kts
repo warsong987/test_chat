@@ -21,3 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "TestChat"
 include(":app")
+include(":auth")

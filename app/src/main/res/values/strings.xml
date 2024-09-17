@@ -494,4 +494,9 @@
     <string name="iraq_hint" translatable="false">0777 123 4567</string>
     <string name="slovenia_hint" translatable="false">070 123 456</string>
     <string name="code_with_sms">Код из смс</string>
+    <string name="registration">Регистрация</string>
+    <string name="register">Зарегистрироваться</string>
+    <string name="phone">Телефон</string>
+    <string name="name">Имя</string>
+    <string name="username">Имя пользователя</string>
 </resources>

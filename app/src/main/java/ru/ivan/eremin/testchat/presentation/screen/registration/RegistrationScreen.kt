@@ -8,11 +8,13 @@ import android.os.Build
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -21,13 +23,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.rememberPermissionState
+import ru.ivan.eremin.testchat.R
 import ru.ivan.eremin.testchat.presentation.components.Screen
 import ru.ivan.eremin.testchat.presentation.navigate.ChatsRoute
 
@@ -61,7 +66,7 @@ fun RegistrationScreen(
         state = state,
         onAction = remember {
             {
-                handleAction(it, navHostController)
+                handleAction(it, navHostController, viewModel)
             }
         }
     )
@@ -73,27 +78,59 @@ private fun RegistrationScreenState(
     onAction: (Action) -> Unit
 ) {
     Screen(
+        modifier = Modifier.fillMaxSize(),
         topBar = {
-            TopAppBar(title = { Text(text = "Реагистрация") })
+            TopAppBar(title = { Text(text = stringResource(R.string.registration)) })
         },
         uiError = state.error
     ) {
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            TextField(
+            OutlinedTextField(
+                modifier = Modifier.fillMaxWidth(),
                 value = state.phone.orEmpty(),
                 onValueChange = {},
+                enabled = false,
                 readOnly = true,
+                label = {
+                    Text(
+                        text = stringResource(R.string.phone)
+                    )
+                }
             )
-            TextField(value = "Иван", onValueChange = {})
-            TextField(value = "warsontt00", onValueChange = {})
-            Button(onClick = {
-                onAction(Action.Registration)
-            }) {
-                Text(text = "Зарегистрироваться")
+            OutlinedTextField(
+                modifier = Modifier.fillMaxWidth(),
+                value = state.name.orEmpty(),
+                onValueChange = { onAction(Action.ChangeName(it)) },
+                label = {
+                    Text(
+                        text = stringResource(R.string.name)
+                    )
+                }
+            )
+
+            OutlinedTextField(
+                modifier = Modifier.fillMaxWidth(),
+                value = state.username.orEmpty(),
+                onValueChange = {},
+                label = {
+                    Text(
+                        text = stringResource(R.string.username)
+                    )
+                }
+            )
+            Button(
+                modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                onClick = {
+                    onAction(Action.Registration)
+                }
+            ) {
+                Text(text = stringResource(R.string.register))
             }
         }
     }
@@ -101,9 +138,15 @@ private fun RegistrationScreenState(
 
 internal sealed interface Action {
     data object Registration : Action
+    data class ChangeName(val name: String) : Action
+    data class UserName(val userName: String) : Action
 }
 
-private fun handleAction(action: Action, navHostController: NavHostController) {
+private fun handleAction(
+    action: Action,
+    navHostController: NavHostController,
+    viewModel: RegistrationViewModel
+) {
     when (action) {
         is Action.Registration -> {
             navHostController.navigate(
@@ -115,6 +158,14 @@ private fun handleAction(action: Action, navHostController: NavHostController) {
                     saveState = true
                 }
             }
+        }
+
+        is Action.ChangeName -> {
+            viewModel.changeName(action.name)
+        }
+
+        is Action.UserName -> {
+            viewModel.changeUserName(action.userName)
         }
     }
 }
