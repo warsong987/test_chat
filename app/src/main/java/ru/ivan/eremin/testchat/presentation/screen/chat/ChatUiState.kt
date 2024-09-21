@@ -4,12 +4,12 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
+import ru.ivan.eremin.feature.entity.UiError
+import ru.ivan.eremin.feature.entity.UiState
 import ru.ivan.eremin.testchat.domain.chats.entity.ChatDetails
 import ru.ivan.eremin.testchat.domain.chats.entity.ChatDownloadData
 import ru.ivan.eremin.testchat.domain.chats.entity.ChatMessageItem
 import ru.ivan.eremin.testchat.domain.chats.entity.ChatSelectedFile
-import ru.ivan.eremin.testchat.presentation.core.UiError
-import ru.ivan.eremin.testchat.presentation.core.UiState
 import ru.ivan.eremin.testchat.presentation.screen.chat.entity.ChatStatus
 
 data class ChatUiState(
@@ -17,7 +17,7 @@ data class ChatUiState(
     val historyState: HistoryState = HistoryState(),
     val sessionState: SessionState = SessionState(),
     val chatState: ChatState = ChatState(),
-    val fileDownloadState:FileDownloadState = FileDownloadState(),
+    val fileDownloadState: FileDownloadState = FileDownloadState(),
     val chatStatus: ChatStatus = ChatStatus.Empty,
     val skeleton: Boolean = false,
     val refresh: Boolean = false,

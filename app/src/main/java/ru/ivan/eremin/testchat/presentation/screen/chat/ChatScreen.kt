@@ -1,4 +1,6 @@
-@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class,
+    ExperimentalMaterial3Api::class
+)
 
 package ru.ivan.eremin.testchat.presentation.screen.chat
 
@@ -58,19 +60,19 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.util.fastForEach
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.SubcomposeAsyncImage
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.koinViewModel
+import ru.ivan.eremin.components.ErrorImage
+import ru.ivan.eremin.components.LoadingPeriodError
+import ru.ivan.eremin.feature.base.Screen
 import ru.ivan.eremin.testchat.domain.chats.entity.ChatDetails
 import ru.ivan.eremin.testchat.domain.chats.entity.ChatDownloadData
 import ru.ivan.eremin.testchat.domain.chats.entity.ChatListMessageType
 import ru.ivan.eremin.testchat.domain.chats.entity.ChatMessageItem
 import ru.ivan.eremin.testchat.domain.chats.entity.ChatSelectedFile
 import ru.ivan.eremin.testchat.domain.chats.entity.Message
-import ru.ivan.eremin.testchat.presentation.components.ErrorImage
-import ru.ivan.eremin.testchat.presentation.components.LoadingPeriodError
-import ru.ivan.eremin.testchat.presentation.components.Screen
 import ru.ivan.eremin.testchat.presentation.screen.chat.view.ChatDateView
 import ru.ivan.eremin.testchat.presentation.screen.chat.view.ChatInput
 import ru.ivan.eremin.testchat.presentation.screen.chat.view.ChatMessageItemView
@@ -82,7 +84,7 @@ import ru.ivan.eremin.testchat.presentation.screen.chat.view.SendMessageSkeleton
 @Composable
 fun ChatScreen(
     navHostController: NavHostController,
-    viewModel: ChatViewModel = hiltViewModel()
+    viewModel: ChatViewModel = koinViewModel()
 ) {
     val state by viewModel.state.collectAsState()
 

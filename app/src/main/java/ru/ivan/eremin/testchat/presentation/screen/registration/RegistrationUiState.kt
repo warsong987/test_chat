@@ -1,7 +1,7 @@
 package ru.ivan.eremin.testchat.presentation.screen.registration
 
-import ru.ivan.eremin.testchat.presentation.core.UiError
-import ru.ivan.eremin.testchat.presentation.core.UiState
+import ru.ivan.eremin.feature.entity.UiError
+import ru.ivan.eremin.feature.entity.UiState
 
 data class RegistrationUiState (
     val skeleton: Boolean = true,

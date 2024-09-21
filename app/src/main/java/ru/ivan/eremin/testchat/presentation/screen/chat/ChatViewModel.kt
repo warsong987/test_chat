@@ -1,21 +1,19 @@
 package ru.ivan.eremin.testchat.presentation.screen.chat
 
 import androidx.lifecycle.SavedStateHandle
-import dagger.hilt.android.lifecycle.HiltViewModel
+import androidx.navigation.toRoute
+import ru.ivan.eremin.feature.base.BaseViewModel
+import ru.ivan.eremin.navigate.Chat
 import ru.ivan.eremin.testchat.domain.chats.entity.ChatDetails
 import ru.ivan.eremin.testchat.domain.chats.entity.ChatMessageItem
 import ru.ivan.eremin.testchat.domain.chats.entity.ChatSelectedFile
 import ru.ivan.eremin.testchat.domain.chats.entity.Message
-import ru.ivan.eremin.testchat.presentation.core.BaseViewModel
-import ru.ivan.eremin.testchat.presentation.navigate.ChatRoute
-import javax.inject.Inject
 
-@HiltViewModel
-class ChatViewModel @Inject constructor(
+class ChatViewModel(
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel<ChatUiState>() {
 
-    private val id by lazy { savedStateHandle.get<Int>(ChatRoute.ID) }
+    private val chatId by lazy { savedStateHandle.toRoute<Chat>().id }
 
     override fun createInitialState(): ChatUiState {
         return ChatUiState()

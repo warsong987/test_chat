@@ -1,8 +1,8 @@
 package ru.ivan.eremin.testchat.presentation.screen.profile
 
+import ru.ivan.eremin.feature.entity.UiError
+import ru.ivan.eremin.feature.entity.UiState
 import ru.ivan.eremin.testchat.domain.profile.entity.Profile
-import ru.ivan.eremin.testchat.presentation.core.UiError
-import ru.ivan.eremin.testchat.presentation.core.UiState
 
 data class ProfileUiState(
     val skeleton: Boolean = false,

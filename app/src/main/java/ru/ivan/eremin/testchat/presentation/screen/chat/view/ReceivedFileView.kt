@@ -11,10 +11,10 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import ru.ivan.eremin.components.Text
 import ru.ivan.eremin.testchat.domain.chats.entity.ChatDownloadData
 import ru.ivan.eremin.testchat.domain.chats.entity.ChatMessageItem
 import ru.ivan.eremin.testchat.domain.chats.entity.DownloadState
-import ru.ivan.eremin.testchat.presentation.components.Text
 
 @Composable
 fun ReceivedFileView(

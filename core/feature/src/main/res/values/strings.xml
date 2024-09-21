@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="connection_failed">Потеряно соединение с интернетом</string>
+    <string name="variti_error">Доступ к Дом.ру ограничен\nТакое бывает, если включен VPN</string>
+    <string name="unknown_error">Возникла ошибка! Повторите позже</string>
+    <string name="retry">Повторить</string>
+</resources>

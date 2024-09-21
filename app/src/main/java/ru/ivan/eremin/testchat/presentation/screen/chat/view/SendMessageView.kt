@@ -10,8 +10,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import ru.ivan.eremin.components.TextMessageContainer
 import ru.ivan.eremin.testchat.domain.chats.entity.ChatMessageItem
-import ru.ivan.eremin.testchat.presentation.components.TextMessageContainer
 
 @Composable
 fun SendMessageView(

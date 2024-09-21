@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="validator_phone_length_error">Телефон не может быть меньше %d символов</string>
+    <string name="validator_phone_incorrect">Номер телефона содержит недопустимые символы</string>
+    <string name="validator_code_length_error">Код не может быть больше 6 символов</string>
+    <string name="validator_code_incorrect">Код содержит недопустимые символы</string>
+</resources>

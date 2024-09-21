@@ -1,4 +1,6 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class,
+    ExperimentalMaterial3Api::class
+)
 
 package ru.ivan.eremin.testchat.presentation.screen.registration
 
@@ -26,21 +28,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.rememberPermissionState
+import org.koin.androidx.compose.koinViewModel
+import ru.ivan.eremin.feature.base.Screen
+import ru.ivan.eremin.navigate.Chats
 import ru.ivan.eremin.testchat.R
-import ru.ivan.eremin.testchat.presentation.components.Screen
-import ru.ivan.eremin.testchat.presentation.navigate.ChatsRoute
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun RegistrationScreen(
     navHostController: NavHostController,
-    viewModel: RegistrationViewModel = hiltViewModel()
+    viewModel: RegistrationViewModel = koinViewModel()
 ) {
     val state by viewModel.state.collectAsState()
 
@@ -150,7 +152,7 @@ private fun handleAction(
     when (action) {
         is Action.Registration -> {
             navHostController.navigate(
-                ChatsRoute.route
+                Chats
             ) {
                 launchSingleTop = true
                 restoreState = true

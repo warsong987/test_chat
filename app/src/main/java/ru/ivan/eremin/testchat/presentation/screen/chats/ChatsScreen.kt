@@ -29,21 +29,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.SubcomposeAsyncImage
+import org.koin.androidx.compose.koinViewModel
+import ru.ivan.eremin.components.BottomNavigate
+import ru.ivan.eremin.components.ErrorImage
+import ru.ivan.eremin.feature.base.Screen
+import ru.ivan.eremin.navigate.Chats
 import ru.ivan.eremin.testchat.domain.chats.entity.Chat
-import ru.ivan.eremin.testchat.presentation.components.BottomNavigate
-import ru.ivan.eremin.testchat.presentation.components.ErrorImage
-import ru.ivan.eremin.testchat.presentation.components.Screen
-import ru.ivan.eremin.testchat.presentation.navigate.ChatRoute
-import ru.ivan.eremin.testchat.presentation.navigate.ChatsRoute
 
+@ExperimentalMaterial3Api
 @Composable
 fun ChatsScreen(
     navHostController: NavHostController,
-    viewModel: ChatsViewModel = hiltViewModel()
+    viewModel: ChatsViewModel = koinViewModel()
 ) {
 
     val state by viewModel.state.collectAsState()
@@ -71,7 +71,7 @@ private fun ChatsScreenState(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = stringResource(id = ChatsRoute.resourceId!!))
+                    Text(text = stringResource(id = Chats.resourceId!!))
                 }
             )
         },
@@ -143,8 +143,8 @@ sealed interface ChatsAction {
 
 private fun handleAction(action: ChatsAction, navHostController: NavHostController) {
     when (action) {
-        is ChatsAction.SelectChat -> navHostController.navigate("${ChatRoute.route}/${action.chatId}") {
-            popUpTo(ChatsRoute.route) {
+        is ChatsAction.SelectChat -> navHostController.navigate(ru.ivan.eremin.navigate.Chat(action.chatId)) {
+            popUpTo(Chats) {
                 saveState = true
             }
             launchSingleTop = true

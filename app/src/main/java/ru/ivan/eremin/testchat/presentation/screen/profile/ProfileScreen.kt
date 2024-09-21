@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class)
 
 package ru.ivan.eremin.testchat.presentation.screen.profile
 
@@ -17,19 +17,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.SubcomposeAsyncImage
+import org.koin.androidx.compose.koinViewModel
+import ru.ivan.eremin.components.BottomNavigate
+import ru.ivan.eremin.components.ErrorImage
+import ru.ivan.eremin.feature.base.Screen
 import ru.ivan.eremin.testchat.domain.profile.entity.Profile
-import ru.ivan.eremin.testchat.presentation.components.BottomNavigate
-import ru.ivan.eremin.testchat.presentation.components.ErrorImage
-import ru.ivan.eremin.testchat.presentation.components.Screen
 
 @Composable
 fun ProfileScreen(
     navHostController: NavHostController,
-    viewModel: ProfileViewModel = hiltViewModel(),
+    viewModel: ProfileViewModel = koinViewModel(),
 ) {
     val state = viewModel.state.collectAsState()
 

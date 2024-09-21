@@ -1,16 +1,10 @@
 package ru.ivan.eremin.testchat.presentation.screen.chats
 
-import androidx.lifecycle.SavedStateHandle
-import dagger.hilt.android.lifecycle.HiltViewModel
+import ru.ivan.eremin.feature.base.BaseViewModel
 import ru.ivan.eremin.testchat.domain.chats.entity.Chat
-import ru.ivan.eremin.testchat.presentation.core.BaseViewModel
-import javax.inject.Inject
 
 
-@HiltViewModel
-class ChatsViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle
-) : BaseViewModel<ChatsUiState>() {
+class ChatsViewModel () : BaseViewModel<ChatsUiState>() {
 
     override fun createInitialState(): ChatsUiState {
         return ChatsUiState()

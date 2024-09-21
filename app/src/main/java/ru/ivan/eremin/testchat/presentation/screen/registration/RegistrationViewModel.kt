@@ -2,18 +2,17 @@ package ru.ivan.eremin.testchat.presentation.screen.registration
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
+import androidx.navigation.toRoute
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import ru.ivan.eremin.testchat.presentation.core.BaseViewModel
-import javax.inject.Inject
+import ru.ivan.eremin.feature.base.BaseViewModel
+import ru.ivan.eremin.navigate.Registration
 
-@HiltViewModel
-class RegistrationViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle
+class RegistrationViewModel(
+    savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<RegistrationUiState>() {
 
-    private val phone by lazy { savedStateHandle.get<String>("phone") }
+    private val phone by lazy { savedStateHandle.toRoute<Registration>().phone }
 
     override fun createInitialState(): RegistrationUiState {
         return RegistrationUiState(
