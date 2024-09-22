@@ -42,6 +42,12 @@ kotlin {
             implementation(project(":kmm:core:network"))
             implementation(project(":kmm:feature:auth:impl"))
             api(project(":kmm:feature:auth:api"))
+            implementation(project(":kmm:feature:registration:impl"))
+            api(project(":kmm:feature:registration:api"))
+            implementation(project(":kmm:feature:profile:impl"))
+            api(project(":kmm:feature:profile:api"))
+            implementation(project(":kmm:feature:chat:impl"))
+            api(project(":kmm:feature:chat:api"))
         }
     }
 }

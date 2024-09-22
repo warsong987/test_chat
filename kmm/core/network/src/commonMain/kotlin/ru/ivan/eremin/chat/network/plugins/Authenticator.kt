@@ -9,10 +9,10 @@ import io.ktor.client.request.header
 import io.ktor.http.HttpStatusCode
 import io.ktor.util.AttributeKey
 import io.ktor.util.KtorDsl
+import ru.ivan.eremin.chat.entity.token.AccessTokenData
 import ru.ivan.eremin.chat.network.entity.HEADER_AUTHORIZATION
 import ru.ivan.eremin.chat.network.entity.HEADER_DOMAIN
 import ru.ivan.eremin.chat.network.entity.HEADER_LOGIN
-import token.AccessTokenData
 
 internal class Authenticator private constructor(
     internal val getToken: suspend TokenParams.() -> AccessTokenData?,

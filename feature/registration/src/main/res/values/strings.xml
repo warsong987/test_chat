@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="retry">Повторить</string>
+    <string name="chats">Чаты</string>
+    <string name="profile">Профиль</string>
+    <string name="registration">Регистрация</string>
+    <string name="register">Зарегистрироваться</string>
+    <string name="phone">Телефон</string>
+    <string name="name">Имя</string>
+    <string name="username">Имя пользователя</string>
+</resources>

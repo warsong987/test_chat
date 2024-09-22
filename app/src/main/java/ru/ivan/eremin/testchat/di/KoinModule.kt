@@ -5,15 +5,15 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import org.koin.android.ext.koin.androidContext
-import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 import ru.ivan.chat.shared.sharedModule
 import ru.ivan.eremin.chat.auth.ui.di.authUiModule
+import ru.ivan.eremin.chat.chat.di.chatUiModule
 import ru.ivan.eremin.chat.config.AppConfig
 import ru.ivan.eremin.chat.config.NetworkConfig
-import ru.ivan.eremin.testchat.presentation.screen.chat.ChatViewModel
-import ru.ivan.eremin.testchat.presentation.screen.registration.RegistrationViewModel
+import ru.ivan.eremin.chat.profile.di.profileUiModule
+import ru.ivan.eremin.chat.registration.di.registrationUiModule
 
 fun startKoinApp(context: Context) {
     val configurationModule = module {
@@ -43,11 +43,8 @@ fun startKoinApp(context: Context) {
         modules(configurationModule)
         modules(sharedModule)
         modules(authUiModule)
-        modules(viewModels)
+        modules(registrationUiModule)
+        modules(profileUiModule)
+        modules(chatUiModule)
     }
-}
-
-val viewModels = module {
-    viewModelOf(::RegistrationViewModel)
-    viewModelOf(::ChatViewModel)
 }

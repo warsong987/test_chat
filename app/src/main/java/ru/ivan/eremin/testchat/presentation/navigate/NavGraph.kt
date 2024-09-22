@@ -6,15 +6,15 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import ru.ivan.eremin.chat.auth.ui.screen.AuthorizationScreen
+import ru.ivan.eremin.chat.chat.screen.chat.ChatScreen
+import ru.ivan.eremin.chat.chat.screen.chats.ChatsScreen
+import ru.ivan.eremin.chat.profile.screen.ProfileScreen
+import ru.ivan.eremin.chat.registration.screen.RegistrationScreen
 import ru.ivan.eremin.navigate.Authorization
 import ru.ivan.eremin.navigate.Chat
 import ru.ivan.eremin.navigate.Chats
 import ru.ivan.eremin.navigate.Profile
 import ru.ivan.eremin.navigate.Registration
-import ru.ivan.eremin.testchat.presentation.screen.chat.ChatScreen
-import ru.ivan.eremin.testchat.presentation.screen.chats.ChatsScreen
-import ru.ivan.eremin.testchat.presentation.screen.profile.ProfileScreen
-import ru.ivan.eremin.testchat.presentation.screen.registration.RegistrationScreen
 
 @ExperimentalMaterial3Api
 @Composable

@@ -26,7 +26,7 @@ kotlin {
 
     sourceSets {
         androidMain.dependencies {
-            implementation(libs.compose.runtime)
+            api(libs.compose.runtime)
         }
         commonMain.dependencies {
             api(libs.kotlinx.serialization.json)

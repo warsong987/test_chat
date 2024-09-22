@@ -81,8 +81,6 @@ dependencies {
     implementation(libs.navigate.compose)
     implementation(libs.accompanist.permissions)
     implementation(libs.googlecode.libphonenumber)
-    implementation(libs.coil)
-    implementation(libs.kotlinx.collections.immutable)
     implementation(libs.koin.core)
     implementation(libs.koin.android)
     implementation(libs.koin.test)
@@ -92,5 +90,8 @@ dependencies {
     implementation(project(":kmm:shared"))
     implementation(project(":core:components"))
     implementation(project(":core:feature"))
-    implementation(project(":feature:auth:ui"))
+    implementation(project(":feature:auth"))
+    implementation(project(":feature:registration"))
+    implementation(project(":feature:profile"))
+    implementation(project(":feature:chat"))
 }

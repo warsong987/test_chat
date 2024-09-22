@@ -1,6 +1,5 @@
 package ru.ivan.eremin.chat.network
 
-import exception.ConnectionException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
@@ -15,6 +14,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
+import ru.ivan.eremin.chat.entity.exception.ConnectionException
 import ru.ivan.eremin.chat.platform.network.NetworkUtils
 import ru.ivan.eremin.chat.utils.kotlin.ResultFlow
 
